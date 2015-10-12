@@ -1,0 +1,35 @@
+<?XML version="1.0" encoding="utf-8" ?>
+<resource>
+<!-- Définition des alias -->
+	<a name="Transform" class="com.ktm.genome.render.component.Transform" />
+	<a name="TextureResource" class="com.ktm.genome.resource.component.TextureResource" />
+	<a name="Layer" class="com.ktm.genome.render.component.Layer" />
+	<a name="Layered" class="com.ktm.genome.render.component.Layered" />
+	<a name="Speed" class="com.lip6.genome.geography.move.component.Speed" />
+	<a name="TargetPos" class="com.lip6.genome.geography.move.component.TargetPos" />
+	<a name="MovingArea" class="components.MovingArea" />
+<!-- Définition des entités -->
+<!-- entité 1 -->
+	<e>
+		<Transform x="0" y="0" />
+		<Layer id="gameLayer" index="1" />
+	</e>
+<!-- entité 2 -->
+	<e>
+		<Transform x="400" y="500" />
+		<TextureResource source="pictures/macro.png" id="macrophage" />
+		<Layered layerId="gameLayer"/>
+		<Speed velocity="5" />
+		<TargetPos x="200" y="200" />
+		<MovingArea x="0" y="-50" width="50" height="70" />
+	</e>
+<!-- entité 3 -->
+	<e>
+		<Transform x="0" y="0" />
+		<TextureResource source="pictures/macro.png" id="macrophage" />
+		<Layered layerId="gameLayer"/>
+		<Speed velocity="3" />
+		<TargetPos x="500" y="600" />
+		<MovingArea x="800" y="700" width="100" height="100" />
+	</e>
+</resource>
