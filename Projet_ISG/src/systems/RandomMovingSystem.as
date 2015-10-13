@@ -8,12 +8,6 @@ package systems
 	import com.ktm.genome.core.logic.system.System;
 	import com.ktm.genome.render.component.Transform;
 	import com.lip6.genome.geography.move.component.TargetPos;
-	import components.MovingArea;
-	/**
-	 * ...
-	 * @author MEMUE
-	 */
-	
 	import com.ktm.genome.core.logic.system.System;
 	 
 	public class RandomMovingSystem extends System {
@@ -45,7 +39,8 @@ package systems
 				// Evaluer si la position de l’entité a atteint la cible
 				if (target.x == tr.x && target.y == tr.y) {
 					// Modification du composant TargetPos
-					
+					target.x = Math.random() * 800;
+					target.y = Math.random() * 600;
 				}
 			}
 		}

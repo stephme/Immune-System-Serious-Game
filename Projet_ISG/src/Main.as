@@ -11,10 +11,6 @@ package
 	import com.lip6.genome.geography.move.system.MoveToSystem;
 	import systems.RandomMovingSystem;
 	
-	/**
-	 * ...
-	 * @author MEMUE
-	 */
 	public class Main extends Sprite 
 	{
 		
