@@ -12,7 +12,7 @@ package systems
 	 
 	public class RandomMovingSystem extends System {
 		
-		private var movingEntities:Family ;
+		private var movingEntities:Family;
 		private var targetMapper:IComponentMapper;
 		private var transformMapper:IComponentMapper;
 		

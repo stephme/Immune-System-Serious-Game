@@ -7,28 +7,115 @@
 	<a name="Layered" class="com.ktm.genome.render.component.Layered" />
 	<a name="Speed" class="com.lip6.genome.geography.move.component.Speed" />
 	<a name="TargetPos" class="com.lip6.genome.geography.move.component.TargetPos" />
+	<a name="Node" class="com.ktm.genome.game.component.Node" />
+	
+	<a name="ToxinProduction" class="components.ToxinProduction" />
+	
 	<!-- Définition des entités -->
 	<!-- entité 1 -->
 	<e>
 		<Transform x="0" y="0" />
 		<Layer id="gameLayer" index="1" />
 	</e>
-	<!-- entité 2 -->
+	<!-- Cellule -->
 	<e>
-		<Transform x="400" y="500" />
-		<TextureResource source="pictures/macro.png" id="macrophage" />
-		<Layered layerId="gameLayer"/>
-		<Speed velocity="5" />
-		<TargetPos x="200" y="200" />
+		<Transform x="200" y="150" />
+		<Layer id="cellLayer" index="2" />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="cellLayer"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/structCell.png" id="cellule" />
+			<Layered layerId="cellLayer"/>
+			<Node />
+		</e>
 	</e>
-	<!-- entité 3 -->
+	<!-- Lynphocyte T8-->
 	<e>
-		<Transform x="0" y="0" />
-		<TextureResource source="pictures/macro.png" id="macrophage" />
-		<Layered layerId="gameLayer"/>
+		<Transform x="500" y="300" />
+		<Layer id="lynphoT8Layer" index="2" />
 		<Speed velocity="3" />
-		<TargetPos x="500" y="600" />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="lynphoT8Layer"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/tCell.png" id="lynphoT8" />
+			<Layered layerId="lynphoT8Layer"/>
+			<Node />
+		</e>
 	</e>
+	<!-- Macrophage -->
+	<e>
+		<Transform x="500" y="300" />
+		<Layer id="macrophageLayer" index="2" />
+		<Speed velocity="3" />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="macrophageLayer"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/macro.png" id="macrophage" />
+			<Layered layerId="macrophageLayer"/>
+			<Node />
+		</e>
+	</e>
+	<!-- Bacterie -->
+	<e>
+		<Transform x="300" y="300" />
+		<Layer id="bacteriaLayer" index="2" />
+		<Speed velocity="2" />
+		<TargetPos x="300" y="300" />
+		<Node />
+		<e>
+			<Transform x="0" y="-32" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="bacteriaLayer"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="0" y="-7" rotation="0" />
+			<TextureResource source="pictures/bactery.png" id="bacterie" />
+			<Layered layerId="bacteriaLayer"/>
+			<ToxinProduction freq="100" />
+			<Node />
+		</e>
+	</e>
+	<!--
+	<e>
+		<Transform x="600" y="300" />
+		<Layer id="bacteriaLayer1" index="2" />
+		<Speed velocity="3" />
+		<TargetPos x="0" y="0" />
+		<Node />
+		<e>
+			<Transform x="0" y="0" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="bacteriaLayer1"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="0" y="15" rotation="0" />
+			<TextureResource source="pictures/bactery.png" id="bacterie" />
+			<Layered layerId="bacteriaLayer1"/>
+			<ToxinProduction freq="70" />
+			<Node />
+		</e>
+	</e>
+	-->
 </resource>
 
 
