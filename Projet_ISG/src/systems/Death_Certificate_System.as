@@ -10,8 +10,6 @@ package systems
 	import components.Virus_Type;
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.render.component.Layer;
-	import factory.Virus_Factory;
-	import factory.Virus_Field;
 	
 	public class Death_Certificate_System extends System {
 		private var _Dead_Entities:Family;
@@ -43,16 +41,15 @@ package systems
 				if (deathCerti.dead) {
 					var ve:Virus_Field = new Virus_Field();
 					ve.transform = { x : trans.x, y : trans.y };
-					ve.targetPos = { x : 0, y : 0 };
-					ve.layer = layer.id;
 					ve.type = { propagation : type.propagation, effectiveness : type.effectiveness };
+					ve.targetPos = { x: trans.x, y : trans.y };
 					
 					for (var i:int = 0; i < deathCerti.infected; i++) {
-						Virus_Factory.createRessourcedEntity(entityManager, ve);
+						EntityFactory.createVirusEntity(entityManager, ve);
 					}
 					
 					for (var i:int = 0; i < deathCerti.wasted; i++) {
-						Waste_Factory.createRessourcedEntity(entityManager);
+						EntityFactory.createWasteEntity(entityManager, ve.transform.x, ve.transform.y);
 					}
 				}
 			}

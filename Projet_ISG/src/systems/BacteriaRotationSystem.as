@@ -84,9 +84,7 @@ package systems
 				} else {
 					var angle:Number = Math.atan2(tar.y - trp.y, tar.x - trp.x);
 					angle = (angle / Math.PI) * 180;
-					br.leftToRotate = Math.abs(tre.rotation - angle);
-					if (tre.rotation >= angle)
-						br.leftToRotate *= -1;
+					br.leftToRotate = angle - tre.rotation;
 				}
 			}
 		}

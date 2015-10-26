@@ -10,6 +10,7 @@
 	<a name="Node" class="com.ktm.genome.game.component.Node" />
 	
 	<a name="ToxinProduction" class="components.ToxinProduction" />
+	<a name="Health" class="components.Health" />
 	
 	<!-- Définition des entités -->
 	<!-- entité 1 -->
@@ -36,7 +37,7 @@
 		</e>
 	</e>
 	<!-- Lynphocyte T8-->
-	<e>
+	<e flags="2">
 		<Transform x="500" y="300" />
 		<Layer id="lynphoT8Layer" index="2" />
 		<Speed velocity="3" />
@@ -77,6 +78,7 @@
 	<e>
 		<Transform x="300" y="300" />
 		<Layer id="bacteriaLayer" index="2" />
+		<Layered layerId="gameLayer" />
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<Node />
@@ -91,6 +93,7 @@
 			<TextureResource source="pictures/bactery.png" id="bacterie" />
 			<Layered layerId="bacteriaLayer"/>
 			<ToxinProduction freq="100" />
+			<Health currentPV="100" maxPV="100" />
 			<Node />
 		</e>
 	</e>

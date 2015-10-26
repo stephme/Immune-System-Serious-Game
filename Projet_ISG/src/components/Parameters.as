@@ -11,7 +11,7 @@ package components
 		public var lifeDecrement:int;
 		
 		// Nombre de virus à ajouter au nombre total de virus qui pourront être produits à la mort de l'entité (si l'entité est infecté)
-		public var numVirusIncrement:Number;
+		public var numVirusIncrement:int;
 		
 		// Indique la fréquence des événements lifeDecrementation et numVirusIncrementation
 		public var freq:int;

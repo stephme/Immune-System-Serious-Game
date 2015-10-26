@@ -9,6 +9,7 @@ package
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.Speed;
 	import com.lip6.genome.geography.move.component.TargetPos;
+	import components.Virus_Type;
 	
 	public class EntityFactory 
 	{
@@ -24,7 +25,7 @@ package
 			em.addComponent(e, EntityBundle, {source:_source,id:_id, toBuild: true});
 		}
 		
-		static public function createDechetEntity(em:IEntityManager, x:int, y:int):void {
+		static public function createWasteEntity(em:IEntityManager, x:Number, y:Number):void {
 			var e:IEntity = em.create();
 			em.addComponent(e, Transform, { x:x, y:y } );
 			var val:int = 3 * Math.random();
@@ -41,13 +42,22 @@ package
 			em.addComponent(e, TargetPos, { x:x, y:y } );
 		}
 		
-		static public function createToxinEntity(em:IEntityManager, x:int, y:int):void {
+		static public function createToxinEntity(em:IEntityManager, x:Number, y:Number):void {
 			var e:IEntity = em.create();
 			em.addComponent(e, Transform, { x:x, y:y } );
 			em.addComponent(e, TextureResource, { source: "pictures/toxin.png", id : "toxine" } );
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
+			e.flags = Flag.TOXIN;
+		}
+		
+		static public function createVirusEntity(em:IEntityManager, fields:Virus_Field):void {
+			var e:IEntity = em.create();
+			em.addComponent(e, Transform, fields.transform);
+			em.addComponent(e, Layered, "gameLayer");
+			em.addComponent(e, TargetPos, fields.targetPos);
+			em.addComponent(e, Virus_Type, fields.type);
 		}
 		
 	}
