@@ -7,8 +7,8 @@ package components
 	 */
 	public class SpecialisationLevel extends Component {
 		
-		public virusSpecLevel:int;
-		public bacteriaSpecLevel:int;
+		public var virusSpecLevel:int;
+		public var bacteriaSpecLevel:int;
 		
 	}
 

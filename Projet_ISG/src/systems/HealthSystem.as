@@ -7,11 +7,11 @@ package systems
 	 */
 	public class HealthSystem extends System {
 		
-		override protected function OnConstructed() {
+		override protected function onConstructed():void {
 			
 		}
 		
-		override protected function OnProcess() {
+		override protected function onProcess():void {
 			
 		}
 		

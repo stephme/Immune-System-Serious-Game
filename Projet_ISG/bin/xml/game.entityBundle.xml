@@ -10,7 +10,8 @@
 	<a name="Node" class="com.ktm.genome.game.component.Node" />
 	
 	<a name="ToxinProduction" class="components.ToxinProduction" />
-	<a name="Health" class="components.Health" />
+	<a name="SpecialisationLevel" class="components.SpecialisationLevel" />
+	<!--<a name="Health" class="components.Health" />-->
 	
 	<!-- Définition des entités -->
 	<!-- entité 1 -->
@@ -36,30 +37,54 @@
 			<Node />
 		</e>
 	</e>
-	<!-- Lynphocyte T8-->
+	<!-- Lymphocyte T8-->
 	<e flags="2">
-		<Transform x="500" y="300" />
-		<Layer id="lynphoT8Layer" index="2" />
+		<Transform x="700" y="300" />
+		<Layer id="lymphoT8Layer" index="2" />
 		<Speed velocity="3" />
+		<TargetPos x="700" y="300" />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
 			<TextureResource source="pictures/healthBar.png" id="healthBar" />
-			<Layered layerId="lynphoT8Layer"/>
+			<Layered layerId="lymphoT8Layer"/>
 			<Node />
 		</e>
 		<e>
 			<Transform x="-25" y="-25" />
-			<TextureResource source="pictures/tCell.png" id="lynphoT8" />
-			<Layered layerId="lynphoT8Layer"/>
+			<TextureResource source="pictures/tCell.png" id="lymphoT8" />
+			<Layered layerId="lymphoT8Layer"/>
+			<Node />
+		</e>
+	</e>
+	<!-- Lymphocyte B-->
+	<e>
+		<Transform x="100" y="100" />
+		<Layer id="lymphoBLayer" index="2" />
+		<Speed velocity="3" />
+		<TargetPos x="100" y="100" />
+		<!-- Permet de discriminer le lymphocyte B. A changer pour un flag ? -->
+		<SpecialisationLevel virusSpecLevel="0" bacteriaSpecLevel="0" />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="lymphoBLayer"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/bCell.png" id="lymphoB" />
+			<Layered layerId="lymphoBLayer"/>
 			<Node />
 		</e>
 	</e>
 	<!-- Macrophage -->
-	<e>
+	<e flags="4">
 		<Transform x="500" y="300" />
 		<Layer id="macrophageLayer" index="2" />
 		<Speed velocity="3" />
+		<TargetPos x="500" y="300" />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -78,7 +103,6 @@
 	<e>
 		<Transform x="300" y="300" />
 		<Layer id="bacteriaLayer" index="2" />
-		<Layered layerId="gameLayer" />
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<Node />
@@ -93,7 +117,7 @@
 			<TextureResource source="pictures/bactery.png" id="bacterie" />
 			<Layered layerId="bacteriaLayer"/>
 			<ToxinProduction freq="100" />
-			<Health currentPV="100" maxPV="100" />
+			<!--<Health currentPV="100" maxPV="100" />-->
 			<Node />
 		</e>
 	</e>

@@ -4,11 +4,14 @@ package systems
 	import com.ktm.genome.core.entity.family.matcher.allOfGenes;
 	import com.ktm.genome.core.data.component.IComponentMapper;
 	import com.ktm.genome.core.entity.family.Family;
+	import com.ktm.genome.core.entity.family.matcher.noneOfFlags;
+	import com.ktm.genome.core.entity.family.matcher.noneOfGenes;
 	import com.ktm.genome.core.entity.IEntity;
 	import com.ktm.genome.core.logic.system.System;
 	import com.ktm.genome.render.component.Transform;
 	import com.lip6.genome.geography.move.component.TargetPos;
 	import com.ktm.genome.core.logic.system.System;
+	import components.SpecialisationLevel;
 	 
 	public class RandomMovingSystem extends System {
 		
@@ -19,7 +22,7 @@ package systems
 		override protected function onConstructed() :void {
 			super.onConstructed();
 			// Paramétrisation de la famille 
-			movingEntities = entityManager.getFamily(allOfGenes(Transform, TargetPos));
+			movingEntities = entityManager.getFamily(allOfGenes(Transform, TargetPos), noneOfFlags(Flag.MACRO), noneOfFlags(Flag.LYMPHO_T8), noneOfGenes(SpecialisationLevel));
 			// Définition des mappers
 			transformMapper = geneManager.getComponentMapper(Transform);
 			targetMapper = geneManager.getComponentMapper(TargetPos);
