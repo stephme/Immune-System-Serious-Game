@@ -23,6 +23,7 @@
 	<e flags="8">
 		<Transform x="200" y="150" />
 		<Layer id="cellLayer" index="2" />
+		<Health maxPV="100" currentPV="100" />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -65,6 +66,7 @@
 		<Speed velocity="3" />
 		<TargetPos x="100" y="100" />
 		<SpecialisationLevel virusSpecLevel="0" bacteriaSpecLevel="0" />
+		<Health maxPV="100" currentPV="100" />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -101,9 +103,9 @@
 	<e flags="4">
 		<Transform x="500" y="300" />
 		<Layer id="macrophageLayer" index="2" />
-		<Layered layerId="gameLayer" />
 		<Speed velocity="3" />
 		<TargetPos x="500" y="300" />
+		<Health maxPV="100" currentPV="100" />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -125,6 +127,7 @@
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<ToxinProduction freq="100" />
+		<Health maxPV="100" currentPV="100" />
 		<Node />
 		<e>
 			<Transform x="0" y="-32" />

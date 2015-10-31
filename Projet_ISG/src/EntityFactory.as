@@ -10,6 +10,7 @@ package
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.Speed;
 	import com.lip6.genome.geography.move.component.TargetPos;
+	import components.ToxinDamages;
 	import components.Virus_Type;
 	
 	public class EntityFactory 
@@ -50,7 +51,7 @@ package
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
-			e.flags = Flag.TOXIN;
+			em.addComponent(e, ToxinDamages, { active:true } );
 		}
 		
 		static public function createVirusEntity(em:IEntityManager, fields:Virus_Field):void {
