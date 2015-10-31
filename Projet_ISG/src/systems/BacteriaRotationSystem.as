@@ -30,6 +30,7 @@ package systems
 		override protected function onConstructed():void {
 			// Paramétrisation de la famille 
 			bacteriaEntities = entityManager.getFamily(allOfGenes(ToxinProduction));
+			
 			// Définition des mappers
 			nodeMapper = geneManager.getComponentMapper(Node);
 			targetPosMapper = geneManager.getComponentMapper(TargetPos);
@@ -41,14 +42,14 @@ package systems
 			for (var i:int = 0 ; i < bacteriaEntities.members.length; i++) {
 				var e:IEntity = bacteriaEntities.members[i];
 				var br:BacteriaInRotation = bacteriaInRotationMapper.getComponent(e);
-				var tre:Transform = transformMapper.getComponent(e);
+				var trp:Transform = transformMapper.getComponent(e);
+				var tar:TargetPos = targetPosMapper.getComponent(e);
 				var n:Node = nodeMapper.getComponent(e);
 				
-				var p:INode = n.inNodes[0];
-				var trp:Transform = transformMapper.getComponent(p.entity);
-				var tar:TargetPos = targetPosMapper.getComponent(p.entity);
+				var p:INode = n.outNodes[1];
+				var tre:Transform = transformMapper.getComponent(p.entity);
 				
-				var hb:INode = p.outNodes[0];
+				var hb:INode = n.outNodes[0];
 				var trhb:Transform = transformMapper.getComponent(hb.entity);
 				
 				if (br == null) {

@@ -18,6 +18,7 @@ package
 	import flash.events.MouseEvent;
 	import systems.RandomMovingSystem;
 	import systems.BacteriaRotationSystem;
+	import systems.ToxinAttackSystem;
 	import systems.ToxinProductionSystem;
 	import systems.UserMovingSystem;
 	
@@ -43,8 +44,10 @@ package
 			//RotationSystem doit être avant RandomMovingSystem
 			sm.setSystem(BacteriaRotationSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(RandomMovingSystem).setProcess(ProcessPhase.FRAME);
-			sm.setSystem(ToxinProductionSystem).setProcess(ProcessPhase.FRAME);
 			
+			sm.setSystem(ToxinProductionSystem).setProcess(ProcessPhase.FRAME);
+			sm.setSystem(ToxinAttackSystem).setProcess(ProcessPhase.FRAME);
+
 			var gameURL:String = 'xml/game.entityBundle.xml';
 			EntityFactory.createResourcedEntity(world.getEntityManager(), gameURL, "game");
 		}

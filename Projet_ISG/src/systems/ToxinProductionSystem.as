@@ -5,7 +5,6 @@ package systems
 	import com.ktm.genome.core.entity.family.matcher.allOfGenes;
 	import com.ktm.genome.core.entity.IEntity;
 	import com.ktm.genome.core.logic.system.System;
-	import com.ktm.genome.game.component.Node;
 	import com.ktm.genome.render.component.Transform;
 	import com.lip6.genome.geography.move.component.TargetPos;
 	import components.ToxinProduction;
@@ -18,7 +17,6 @@ package systems
 		private var bacteriaEntities:Family;
 		private var transformMapper:IComponentMapper;
 		private var toxinProductionMapper:IComponentMapper;
-		private var nodeMapper:IComponentMapper;
 		
 		override protected function onConstructed():void {
 			bacteriaEntities = entityManager.getFamily(allOfGenes(ToxinProduction));
@@ -26,7 +24,6 @@ package systems
 			// Définition des mappers
 			toxinProductionMapper = geneManager.getComponentMapper(ToxinProduction);
 			transformMapper = geneManager.getComponentMapper(Transform);
-			nodeMapper = geneManager.getComponentMapper(Node);
 		}
 		
 		/*
@@ -38,8 +35,7 @@ package systems
 				var e:IEntity = bacteriaEntities.members[i];
 				var tp:ToxinProduction = toxinProductionMapper.getComponent(e);
 				if (++tp.cpt == tp.freq) {
-					var n:Node = nodeMapper.getComponent(e);
-					var tr:Transform = transformMapper.getComponent(n.inNodes[0].entity);
+					var tr:Transform = transformMapper.getComponent(e);
 					EntityFactory.createToxinEntity(entityManager, tr.x, tr.y);
 					tp.cpt = 0;
 				}

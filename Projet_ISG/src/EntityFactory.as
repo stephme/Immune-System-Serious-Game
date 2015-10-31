@@ -2,6 +2,7 @@ package
 {
 	
 	import com.ktm.genome.core.entity.IEntity;
+	import com.ktm.genome.game.component.Node;
 	import com.ktm.genome.render.component.Layered;
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.resource.component.EntityBundle;
@@ -14,9 +15,9 @@ package
 	public class EntityFactory 
 	{
 		
-		public static const LOW_SPEED:Number = 0.2;
-		public static const MED_SPEED:Number = 1;
-		public static const HIGH_SPEED:Number = 3;
+		public static const LOW_SPEED:Number = 0.1;
+		public static const MED_SPEED:Number = 0.3;
+		public static const HIGH_SPEED:Number = 0.7;
 
 		static public function createResourcedEntity(em:IEntityManager,_source:String,_id:String):void {
 			// Création d’une entité vide
@@ -58,6 +59,15 @@ package
 			em.addComponent(e, Layered, "gameLayer");
 			em.addComponent(e, TargetPos, fields.targetPos);
 			em.addComponent(e, Virus_Type, fields.type);
+		}
+		
+		static public function createSelectionCircleEntity(em:IEntityManager, layerId:String, x:Number, y:Number):IEntity {
+			var e:IEntity = em.create();
+			em.addComponent(e, Transform, { x:x, y:y } );
+			em.addComponent(e, TextureResource, { source: "pictures/selection.png", id : "selection" } );
+			em.addComponent(e, Layered, { layerId: layerId } );
+			em.addComponent(e, Node);
+			return e;
 		}
 		
 	}

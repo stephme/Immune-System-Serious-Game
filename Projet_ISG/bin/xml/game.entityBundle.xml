@@ -11,7 +11,7 @@
 	
 	<a name="ToxinProduction" class="components.ToxinProduction" />
 	<a name="SpecialisationLevel" class="components.SpecialisationLevel" />
-	<!--<a name="Health" class="components.Health" />-->
+	<a name="Health" class="components.Health" />
 	
 	<!-- Définition des entités -->
 	<!-- entité 1 -->
@@ -20,7 +20,7 @@
 		<Layer id="gameLayer" index="1" />
 	</e>
 	<!-- Cellule -->
-	<e>
+	<e flags="8">
 		<Transform x="200" y="150" />
 		<Layer id="cellLayer" index="2" />
 		<Node />
@@ -43,6 +43,7 @@
 		<Layer id="lymphoT8Layer" index="2" />
 		<Speed velocity="3" />
 		<TargetPos x="700" y="300" />
+		<Health maxPV="100" currentPV="100" />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -63,7 +64,6 @@
 		<Layer id="lymphoBLayer" index="2" />
 		<Speed velocity="3" />
 		<TargetPos x="100" y="100" />
-		<!-- Permet de discriminer le lymphocyte B. A changer pour un flag ? -->
 		<SpecialisationLevel virusSpecLevel="0" bacteriaSpecLevel="0" />
 		<Node />
 		<e>
@@ -78,11 +78,30 @@
 			<Layered layerId="lymphoBLayer"/>
 			<Node />
 		</e>
+		<e>
+			<Transform x="-50" y="-50" alpha="0.2" />
+			<TextureResource source="pictures/recognitionArea.png" id="recognitionArea" />
+			<Layered layerId="lymphoBLayer" />
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="30" />
+			<TextureResource source="pictures/virusBar.png" id="virusBar" />
+			<Layered layerId="lymphoBLayer" />
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="35" />
+			<TextureResource source="pictures/bacteryBar.png" id="bacteryBar" />
+			<Layered layerId="lymphoBLayer" />
+			<Node />
+		</e>
 	</e>
 	<!-- Macrophage -->
 	<e flags="4">
 		<Transform x="500" y="300" />
 		<Layer id="macrophageLayer" index="2" />
+		<Layered layerId="gameLayer" />
 		<Speed velocity="3" />
 		<TargetPos x="500" y="300" />
 		<Node />
@@ -105,6 +124,7 @@
 		<Layer id="bacteriaLayer" index="2" />
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
+		<ToxinProduction freq="100" />
 		<Node />
 		<e>
 			<Transform x="0" y="-32" />
@@ -116,33 +136,9 @@
 			<Transform x="0" y="-7" rotation="0" />
 			<TextureResource source="pictures/bactery.png" id="bacterie" />
 			<Layered layerId="bacteriaLayer"/>
-			<ToxinProduction freq="100" />
-			<!--<Health currentPV="100" maxPV="100" />-->
 			<Node />
 		</e>
 	</e>
-	<!--
-	<e>
-		<Transform x="600" y="300" />
-		<Layer id="bacteriaLayer1" index="2" />
-		<Speed velocity="3" />
-		<TargetPos x="0" y="0" />
-		<Node />
-		<e>
-			<Transform x="0" y="0" />
-			<TextureResource source="pictures/healthBar.png" id="healthBar" />
-			<Layered layerId="bacteriaLayer1"/>
-			<Node />
-		</e>
-		<e>
-			<Transform x="0" y="15" rotation="0" />
-			<TextureResource source="pictures/bactery.png" id="bacterie" />
-			<Layered layerId="bacteriaLayer1"/>
-			<ToxinProduction freq="70" />
-			<Node />
-		</e>
-	</e>
-	-->
 </resource>
 
 

@@ -6,6 +6,9 @@ package systems
 	import com.ktm.genome.core.entity.family.matcher.allOfGenes;
 	import com.ktm.genome.core.entity.IEntity;
 	import com.ktm.genome.core.logic.system.System;
+	import com.ktm.genome.game.component.INode;
+	import com.ktm.genome.game.component.Node;
+	import com.ktm.genome.render.component.Layer;
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.TargetPos;
@@ -22,6 +25,8 @@ package systems
 		private var families:Vector.<Family>;
 		private var transformMapper:IComponentMapper;
 		private var targetPosMapper:IComponentMapper;
+		private var nodeMapper:IComponentMapper;
+		private var layerMapper:IComponentMapper;
 		
 		private var entitySelected:IEntity;
 		
@@ -30,7 +35,7 @@ package systems
 		}
 		
 		override protected function onConstructed():void {
-			if (stage) {
+			if (stage != null) {
 				stage.addEventListener(MouseEvent.CLICK, selectEntity);
 				stage.addEventListener(MouseEvent.RIGHT_CLICK, moveEntity);
 				
@@ -41,6 +46,8 @@ package systems
 				
 				transformMapper = geneManager.getComponentMapper(Transform);
 				targetPosMapper = geneManager.getComponentMapper(TargetPos);
+				nodeMapper = geneManager.getComponentMapper(Node);
+				layerMapper = geneManager.getComponentMapper(Layer);
 				
 				entitySelected = null;
 			}
@@ -51,29 +58,42 @@ package systems
 				for (var j:int = 0; j < families[i].members.length; j++) {
 					var en:IEntity = families[i].members[j];
 					var tr:Transform = transformMapper.getComponent(en);
-					if (Math.sqrt(Math.pow(tr.x - e.localX, 2) + Math.pow(tr.y - e.localY, 2)) <= 50) {
+					if (Math.sqrt(Math.pow(tr.x - e.localX, 2) + Math.pow(tr.y - e.localY, 2)) <= 25) {
 						if (entitySelected != en) {
+							if (entitySelected != null)
+								endSelection();
 							entitySelected = en;
+							//Ajout de l'entité pour le cercle de selection
+							var p:Node = nodeMapper.getComponent(en);
+							var l:Layer = layerMapper.getComponent(en);
+							var _tr:Transform = transformMapper.getComponent(p.outNodes[1].entity);
+							var c:IEntity = EntityFactory.createSelectionCircleEntity(entityManager, l.id, _tr.x, _tr.y);
+							p.outNodes.push(nodeMapper.getComponent(c));
 							trace("selected");
-						} else
+						} else {
 							trace("already selected");
+						}
 						return;
 					}
 				}
 			}
-			if (entitySelected != null) {
-				entitySelected = null;
-				trace("end selection");
-			}
+			if (entitySelected != null)
+				endSelection();
 		}
 		
 		private function moveEntity(e:MouseEvent):void {
 			if (entitySelected != null) {
-				trace("moving entity");
 				var tp:TargetPos = targetPosMapper.getComponent(entitySelected);
 				tp.x = e.localX;
 				tp.y = e.localY;
 			}
+		}
+		
+		private function endSelection():void {
+			trace("end selection");
+			var n:INode = nodeMapper.getComponent(entitySelected).outNodes.pop();
+			entityManager.killEntity(n.entity);
+			entitySelected = null;
 		}
 		
 	}
