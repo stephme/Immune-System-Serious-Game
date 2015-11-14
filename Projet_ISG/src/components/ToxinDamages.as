@@ -8,7 +8,7 @@ package components
 	public class ToxinDamages extends Component {
 		
 		public var active:Boolean;
-		public static const DAMAGES:Number = 5;
+		public static const DAMAGES:int = 10;
 		
 	}
 

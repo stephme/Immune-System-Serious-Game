@@ -23,7 +23,7 @@
 	<e flags="8">
 		<Transform x="200" y="150" />
 		<Layer id="cellLayer" index="2" />
-		<Health maxPV="100" currentPV="100" />
+		<Health />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -44,7 +44,7 @@
 		<Layer id="lymphoT8Layer" index="2" />
 		<Speed velocity="3" />
 		<TargetPos x="700" y="300" />
-		<Health maxPV="100" currentPV="100" />
+		<Health />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -65,8 +65,8 @@
 		<Layer id="lymphoBLayer" index="2" />
 		<Speed velocity="3" />
 		<TargetPos x="100" y="100" />
-		<SpecialisationLevel virusSpecLevel="0" bacteriaSpecLevel="0" />
-		<Health maxPV="100" currentPV="100" />
+		<SpecialisationLevel />
+		<Health />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -81,19 +81,19 @@
 			<Node />
 		</e>
 		<e>
-			<Transform x="-50" y="-50" alpha="0.2" />
+			<Transform x="-50" y="-50" alpha="0.2" scaleX="1" scaleY="1" />
 			<TextureResource source="pictures/recognitionArea.png" id="recognitionArea" />
 			<Layered layerId="lymphoBLayer" />
 			<Node />
 		</e>
 		<e>
-			<Transform x="-25" y="30" />
+			<Transform x="-25" y="30" scaleX="0" />
 			<TextureResource source="pictures/virusBar.png" id="virusBar" />
 			<Layered layerId="lymphoBLayer" />
 			<Node />
 		</e>
 		<e>
-			<Transform x="-25" y="35" />
+			<Transform x="-25" y="35" scaleX="0" />
 			<TextureResource source="pictures/bacteryBar.png" id="bacteryBar" />
 			<Layered layerId="lymphoBLayer" />
 			<Node />
@@ -105,7 +105,7 @@
 		<Layer id="macrophageLayer" index="2" />
 		<Speed velocity="3" />
 		<TargetPos x="500" y="300" />
-		<Health maxPV="100" currentPV="100" />
+		<Health />
 		<Node />
 		<e>
 			<Transform x="-25" y="-35" />
@@ -127,7 +127,7 @@
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<ToxinProduction freq="100" />
-		<Health maxPV="100" currentPV="100" />
+		<Health />
 		<Node />
 		<e>
 			<Transform x="0" y="-32" />

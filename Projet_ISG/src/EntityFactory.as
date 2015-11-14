@@ -12,6 +12,8 @@ package
 	import com.lip6.genome.geography.move.component.TargetPos;
 	import components.ToxinDamages;
 	import components.Virus_Type;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	public class EntityFactory 
 	{
@@ -57,7 +59,9 @@ package
 		static public function createVirusEntity(em:IEntityManager, fields:Virus_Field):void {
 			var e:IEntity = em.create();
 			em.addComponent(e, Transform, fields.transform);
-			em.addComponent(e, Layered, "gameLayer");
+			em.addComponent(e, TextureResource, { source: "pictures/virus.png", id : "virus" } );
+			em.addComponent(e, Layered, { layerId: "gameLayer" } );
+			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, fields.targetPos);
 			em.addComponent(e, Virus_Type, fields.type);
 		}
@@ -69,6 +73,24 @@ package
 			em.addComponent(e, Layered, { layerId: layerId } );
 			em.addComponent(e, Node);
 			return e;
+		}
+		
+		static public function killEntity(em:IEntityManager, t:IEntity, ttr:Transform):void {
+			var pas:Number = 0.1;
+			var tim:Timer = new Timer(100, 1 / pas);
+			tim.addEventListener(TimerEvent.TIMER, fadeOut(ttr, pas));
+			function fadeOut(ttr:Transform, pas:Number):Function {
+				return function():void {
+					ttr.alpha -= pas;
+				}
+			}
+			tim.addEventListener(TimerEvent.TIMER_COMPLETE, kill(t));
+			function kill(t:IEntity):Function {
+				return function():void {
+					em.killEntity(t);	
+				}
+			}
+			tim.start();
 		}
 		
 	}

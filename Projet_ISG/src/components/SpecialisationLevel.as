@@ -7,8 +7,11 @@ package components
 	 */
 	public class SpecialisationLevel extends Component {
 		
-		public var virusSpecLevel:int;
-		public var bacteriaSpecLevel:int;
+		public static const SPE_INCREMENT:Number = 0.5;
+		public var virusSpecLevel:Number = 0;
+		public var bacteriaSpecLevel:Number = 0;
+		public var spec:int = SpecialisationEnum.NONE;
+		public var addActionArea:Boolean = false;
 		
 	}
 
