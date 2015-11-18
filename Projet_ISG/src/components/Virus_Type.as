@@ -3,6 +3,6 @@ package components {
 	
 	public class Virus_Type extends Component {
 		public var propagation:Number;
-		public var effectiveness:Number;
+		public var effectiveness:int;
 	}
 }

@@ -33,6 +33,7 @@ package systems
 		private var layeredMapper:IComponentMapper;
 		private var layerMapper:IComponentMapper;
 		private var speedMapper:IComponentMapper;
+		private var virusTypeMapper:IComponentMapper;
 		
 		override protected function onConstructed():void {
 			lymphoBEntities = entityManager.getFamily(allOfGenes(SpecialisationLevel));
@@ -47,16 +48,7 @@ package systems
 			layeredMapper = geneManager.getComponentMapper(Layered);
 			layerMapper = geneManager.getComponentMapper(Layer);
 			speedMapper = geneManager.getComponentMapper(Speed);
-			
-			//A ENLEVER
-			var ve:Virus_Field = new Virus_Field();
-			var vt:Virus_Type = new Virus_Type();
-			vt.propagation = 5;
-			vt.effectiveness = 5;
-			ve.transform = { x : 200, y : 500 };
-			ve.type = vt;
-			ve.targetPos = { x: 200, y : 300 };
-			EntityFactory.createVirusEntity(entityManager, ve);
+			virusTypeMapper = geneManager.getComponentMapper(Virus_Type);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -72,7 +64,7 @@ package systems
 				if (s.spec == SpecialisationEnum.NONE) {
 					for (var j:int = 0; j < bacteriaEntities.members.length; j++) {
 						b = bacteriaEntities.members[j];
-						if (bacteriaContact(lbtr, transformMapper.getComponent(b), RECOGNITION_AREA_RADIUS)) {
+						if (Contact.bacteriaContact(lbtr, transformMapper.getComponent(b), RECOGNITION_AREA_RADIUS)) {
 							s.bacteriaSpecLevel += SpecialisationLevel.SPE_INCREMENT;
 							trace(s.bacteriaSpecLevel);
 							if (s.bacteriaSpecLevel == 100) {
@@ -85,7 +77,7 @@ package systems
 					}
 					for (j = 0; j < virusEntities.members.length; j++) {
 						v = virusEntities.members[j];
-						if (virusContact(lbtr, transformMapper.getComponent(v), RECOGNITION_AREA_RADIUS)) {
+						if (Contact.virusContact(lbtr, transformMapper.getComponent(v), RECOGNITION_AREA_RADIUS)) {
 							s.virusSpecLevel += SpecialisationLevel.SPE_INCREMENT;
 							trace(s.virusSpecLevel);
 							if (s.virusSpecLevel == 100) {
@@ -101,17 +93,20 @@ package systems
 				} else if (s.spec == SpecialisationEnum.VIRUS) {
 					for (j = 0; j < virusEntities.members.length; j++) {
 						v = virusEntities.members[j];
-						if (virusContact(lbtr, transformMapper.getComponent(v), ACTION_AREA_RADIUS)) {
-							//Penser a remettre une vitesse normale pour le virus quand celui-ci n'est plus dans l'action area
+						if (Contact.virusContact(lbtr, transformMapper.getComponent(v), ACTION_AREA_RADIUS)) {
 							speed = speedMapper.getComponent(v);
-							if (speed.velocity == EntityFactory.MED_SPEED)
+							var vt:Virus_Type = virusTypeMapper.getComponent(v);
+							if (speed.velocity == EntityFactory.MED_SPEED && vt.effectiveness > 0) {
+								// Le virus est agglutine
 								speed.velocity = EntityFactory.LOW_SPEED;
+								vt.effectiveness = 0;
+							}
 						}
 					}
 				} else {
 					for (j = 0; j < bacteriaEntities.members.length; j++) {
 						b = bacteriaEntities.members[j];
-						if (bacteriaContact(lbtr, transformMapper.getComponent(b), ACTION_AREA_RADIUS)) {
+						if (Contact.bacteriaContact(lbtr, transformMapper.getComponent(b), ACTION_AREA_RADIUS)) {
 							speed = speedMapper.getComponent(b);
 							if (speed.velocity == EntityFactory.MED_SPEED)
 								speed.velocity = EntityFactory.LOW_SPEED;
@@ -135,24 +130,6 @@ package systems
 			entityManager.addComponent(e, Layered, { layerId: id } );
 			entityManager.addComponent(e, Transform, { x:-ACTION_AREA_RADIUS, y:-ACTION_AREA_RADIUS, scaleX: ACTION_AREA_RADIUS / 50, scaleY: ACTION_AREA_RADIUS / 50, alpha: 0.2} );
 			s.addActionArea = false;
-		}
-		
-		private function virusContact(lbtr:Transform, vtr:Transform, radius:Number):Boolean {
-			if (Math.sqrt(Math.pow(lbtr.x - vtr.x, 2) + Math.pow(lbtr.y - vtr.y, 2)) <= radius ||
-				Math.sqrt(Math.pow(lbtr.x - (vtr.x+15), 2) + Math.pow(lbtr.y - vtr.y, 2)) <= radius ||
-				Math.sqrt(Math.pow(lbtr.x - vtr.x, 2) + Math.pow(lbtr.y - (vtr.y+15), 2)) <= radius ||
-				Math.sqrt(Math.pow(lbtr.x - (vtr.x+15), 2) + Math.pow(lbtr.y - (vtr.y+15), 2)) <= radius)
-				return true;
-			return false;
-		}
-		
-		private function bacteriaContact(lbtr:Transform, btr:Transform, radius:Number):Boolean {
-			if (Math.sqrt(Math.pow(lbtr.x - btr.x, 2) + Math.pow(lbtr.y - btr.y, 2)) <= radius ||
-				Math.sqrt(Math.pow(lbtr.x - btr.x, 2) + Math.pow(lbtr.y - btr.y, 2)) <= radius ||
-				Math.sqrt(Math.pow(lbtr.x - btr.x, 2) + Math.pow(lbtr.y - btr.y, 2)) <= radius ||
-				Math.sqrt(Math.pow(lbtr.x - btr.x, 2) + Math.pow(lbtr.y - btr.y, 2)) <= radius)
-				return true;
-			return false;
 		}
 		
 	}

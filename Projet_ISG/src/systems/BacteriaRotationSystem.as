@@ -57,6 +57,8 @@ package systems
 				} else if (trp.x == tar.x && trp.y == tar.y) {
 					br.leftToRotate = 0;
 				} else if (br.leftToRotate != 0) {
+					if (tre == null)
+						trace("tre is null");
 					tre.rotation = clampAngle(tre.rotation + br.pas * br.leftToRotate);
 					br.leftToRotate -= br.pas * br.leftToRotate;
 					

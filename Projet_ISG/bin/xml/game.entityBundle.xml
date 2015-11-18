@@ -12,6 +12,7 @@
 	<a name="ToxinProduction" class="components.ToxinProduction" />
 	<a name="SpecialisationLevel" class="components.SpecialisationLevel" />
 	<a name="Health" class="components.Health" />
+	<a name="Death_Certificate" class="components.Death_Certificate" />
 	
 	<!-- Définition des entités -->
 	<!-- entité 1 -->
@@ -23,6 +24,7 @@
 	<e flags="8">
 		<Transform x="200" y="150" />
 		<Layer id="cellLayer" index="2" />
+		<Death_Certificate />
 		<Health />
 		<Node />
 		<e>
@@ -33,8 +35,8 @@
 		</e>
 		<e>
 			<Transform x="-25" y="-25" />
-			<TextureResource source="pictures/structCell.png" id="cellule" />
-			<Layered layerId="cellLayer"/>
+			<TextureResource source="pictures/structCell.png" id="structCell" />
+			<Layered layerId="cellLayer" />
 			<Node />
 		</e>
 	</e>
@@ -44,6 +46,7 @@
 		<Layer id="lymphoT8Layer" index="2" />
 		<Speed velocity="3" />
 		<TargetPos x="700" y="300" />
+		<Death_Certificate />
 		<Health />
 		<Node />
 		<e>
@@ -54,7 +57,7 @@
 		</e>
 		<e>
 			<Transform x="-25" y="-25" />
-			<TextureResource source="pictures/tCell.png" id="lymphoT8" />
+			<TextureResource source="pictures/tCell.png" id="tCell" />
 			<Layered layerId="lymphoT8Layer"/>
 			<Node />
 		</e>
@@ -66,6 +69,7 @@
 		<Speed velocity="3" />
 		<TargetPos x="100" y="100" />
 		<SpecialisationLevel />
+		<Death_Certificate />
 		<Health />
 		<Node />
 		<e>
@@ -76,7 +80,7 @@
 		</e>
 		<e>
 			<Transform x="-25" y="-25" />
-			<TextureResource source="pictures/bCell.png" id="lymphoB" />
+			<TextureResource source="pictures/bCell.png" id="bCell" />
 			<Layered layerId="lymphoBLayer"/>
 			<Node />
 		</e>
@@ -105,6 +109,7 @@
 		<Layer id="macrophageLayer" index="2" />
 		<Speed velocity="3" />
 		<TargetPos x="500" y="300" />
+		<Death_Certificate />
 		<Health />
 		<Node />
 		<e>
@@ -115,7 +120,7 @@
 		</e>
 		<e>
 			<Transform x="-25" y="-25" />
-			<TextureResource source="pictures/macro.png" id="macrophage" />
+			<TextureResource source="pictures/macro.png" id="macro" />
 			<Layered layerId="macrophageLayer"/>
 			<Node />
 		</e>
@@ -127,6 +132,7 @@
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<ToxinProduction freq="100" />
+		<Death_Certificate />
 		<Health />
 		<Node />
 		<e>
@@ -137,7 +143,7 @@
 		</e>
 		<e>
 			<Transform x="0" y="-7" rotation="0" />
-			<TextureResource source="pictures/bactery.png" id="bacterie" />
+			<TextureResource source="pictures/bactery.png" id="bactery" />
 			<Layered layerId="bacteriaLayer"/>
 			<Node />
 		</e>

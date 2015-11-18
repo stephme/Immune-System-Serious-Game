@@ -42,7 +42,7 @@ package
 				filename = "pictures/waste3.png";
 			em.addComponent(e, TextureResource, { source: filename, id : "dechet" + (++val) } );
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
-			em.addComponent(e, Speed, { velocity: MED_SPEED } );
+			em.addComponent(e, Speed, { velocity: LOW_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
 		}
 		

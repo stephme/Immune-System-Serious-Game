@@ -8,7 +8,7 @@ package
 	public class Virus_Field {
 		
 		public var transform:Object;
-		public var type:Virus_Type;
+		public var type:Object;
 		public var targetPos:Object;
 	
 	}

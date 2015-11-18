@@ -28,7 +28,7 @@ package systems
 		private var nodeMapper:IComponentMapper;
 		private var layerMapper:IComponentMapper;
 		
-		private var entitySelected:IEntity;
+		public static var entitySelected:IEntity;
 		
 		public function UserMovingSystem(stage:Stage):void {
 			this.stage = stage;
