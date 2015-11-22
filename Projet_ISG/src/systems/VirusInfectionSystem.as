@@ -19,13 +19,13 @@ package systems
 	import components.ToxinProduction;
 	import components.VirusTypeA;
 	import components.VirusTypeV;
+	import components.Agglutined;
 
 	/**
 	 * ...
 	 * @author Stéphane
 	 */
 	public class VirusInfectionSystem extends System {
-		
 		private var virusEntities:Family;
 		private var victimFamilies:Vector.<Family>;
 		private var transformMapper:IComponentMapper;
@@ -38,6 +38,7 @@ package systems
 		private var layeredMapper:IComponentMapper;
 		private var layerMapper:IComponentMapper;
 		private var holderMapper:IComponentMapper;
+		private var aggluMapper:IComponentMapper;
 	
 		override protected function onConstructed():void {
 			virusEntities = entityManager.getFamily(allOfGenes(VirusTypeV));
@@ -59,6 +60,7 @@ package systems
 			layeredMapper = geneManager.getComponentMapper(Layered);
 			layerMapper = geneManager.getComponentMapper(Layer);
 			holderMapper = geneManager.getComponentMapper(HolderInfection);
+			aggluMapper = geneManager.getComponentMapper(Agglutined);
 		}
 
 		override protected function onProcess(delta:Number):void {
@@ -69,9 +71,11 @@ package systems
 			for (var i:int = 0; i < victimsVector.length; i++) {
 				var victim:IEntity = victimsVector[i];
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
+				var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
+				if (victimDc.dead) continue;
 				if (victimVt != null) {
 					var victimHi:HolderInfection = holderMapper.getComponent(victim);
-					if (victimHi != null && !victimVt.swapImg) {
+					if (victimHi != null) {
 						var er:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
 						entityManager.addComponent(er, Transform, {x: victimHi.x, y: victimHi.y})
 						entityManager.addComponent(er, TextureResource, { source: "pictures/" + victimHi.idImg + "_infected.png", id : victimHi.idImg + "_infected" } );
@@ -85,6 +89,8 @@ package systems
 				for (var h:int = 0; h < virusEntities.members.length; h++) {
 					var virus:IEntity = virusEntities.members[h];
 					var virusDc:DeathCertificate = deathCertificateMapper.getComponent(virus);
+					var virusAg:Agglutined = aggluMapper.getComponent(virus);
+					if (virusDc.dead || virusAg.agglu) continue;
 					var virusVt:VirusTypeV = virusTypeVMapper.getComponent(virus);
 					var virusTr:Transform = transformMapper.getComponent(virus);
 					if (Contact.virusContact(victimTr, virusTr, 25)) {

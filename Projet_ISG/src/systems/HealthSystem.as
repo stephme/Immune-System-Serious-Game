@@ -45,7 +45,7 @@ package systems
 		override protected function onProcess(delta:Number):void {
 			for (var i:int = 0; i < entities.members.length; i++) {
 				var e:IEntity = entities.members[i];
-				if (e == null) continue;
+				if (deathCertificateMapper.getComponent(e).dead) continue;
 				var deathCerti:DeathCertificate = deathCertificateMapper.getComponent(e);
 				if (deathCerti.dead) continue;
 				var h:Health = healthMapper.getComponent(e);

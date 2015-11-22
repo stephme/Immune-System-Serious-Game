@@ -11,13 +11,12 @@ package systems
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.Speed;
+	import components.Agglutined;
 	import components.SpecialisationLevel;
 	import components.ToxinProduction;
 	import components.VirusTypeV;
-	/**
-	 * ...
-	 * @author Stéphane
-	 */
+	import components.DeathCertificate;
+	
 	public class SpecialisationSystem extends System {
 		
 		public static const RECOGNITION_AREA_RADIUS:Number = 50;
@@ -33,7 +32,9 @@ package systems
 		private var layeredMapper:IComponentMapper;
 		private var layerMapper:IComponentMapper;
 		private var speedMapper:IComponentMapper;
+		private var aggluMapper:IComponentMapper;
 		private var virusTypeMapper:IComponentMapper;
+		private var deathCertificateMapper:IComponentMapper;
 		
 		override protected function onConstructed():void {
 			lymphoBEntities = entityManager.getFamily(allOfGenes(SpecialisationLevel));
@@ -49,6 +50,8 @@ package systems
 			layerMapper = geneManager.getComponentMapper(Layer);
 			speedMapper = geneManager.getComponentMapper(Speed);
 			virusTypeMapper = geneManager.getComponentMapper(VirusTypeV);
+			aggluMapper = geneManager.getComponentMapper(Agglutined);
+			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -64,6 +67,7 @@ package systems
 				if (s.spec == SpecialisationEnum.NONE) {
 					for (var j:int = 0; j < bacteriaEntities.members.length; j++) {
 						b = bacteriaEntities.members[j];
+						if (deathCertificateMapper.getComponent(b).dead) continue;
 						if (Contact.bacteriaContact(lbtr, transformMapper.getComponent(b), RECOGNITION_AREA_RADIUS)) {
 							s.bacteriaSpecLevel += SpecialisationLevel.SPE_INCREMENT;
 							trace(s.bacteriaSpecLevel);
@@ -77,6 +81,7 @@ package systems
 					}
 					for (j = 0; j < virusEntities.members.length; j++) {
 						v = virusEntities.members[j];
+						if (deathCertificateMapper.getComponent(v).dead) continue;
 						if (Contact.virusContact(lbtr, transformMapper.getComponent(v), RECOGNITION_AREA_RADIUS)) {
 							s.virusSpecLevel += SpecialisationLevel.SPE_INCREMENT;
 							trace(s.virusSpecLevel);
@@ -93,23 +98,19 @@ package systems
 				} else if (s.spec == SpecialisationEnum.VIRUS) {
 					for (j = 0; j < virusEntities.members.length; j++) {
 						v = virusEntities.members[j];
+						if (deathCertificateMapper.getComponent(v).dead) continue;
 						if (Contact.virusContact(lbtr, transformMapper.getComponent(v), ACTION_AREA_RADIUS)) {
-							speed = speedMapper.getComponent(v);
-							var vt:VirusTypeV = virusTypeMapper.getComponent(v);
-							if (speed.velocity == EntityFactory.MED_SPEED && vt.effectiveness > 0) {
-								// Le virus est agglutine
-								speed.velocity = EntityFactory.LOW_SPEED;
-								vt.effectiveness = 0;
-							}
+							speedMapper.getComponent(v).velocity = EntityFactory.LOW_SPEED;
+							aggluMapper.getComponent(v).agglu = true;
 						}
 					}
 				} else {
 					for (j = 0; j < bacteriaEntities.members.length; j++) {
 						b = bacteriaEntities.members[j];
+						if (deathCertificateMapper.getComponent(b).dead) continue;
 						if (Contact.bacteriaContact(lbtr, transformMapper.getComponent(b), ACTION_AREA_RADIUS)) {
-							speed = speedMapper.getComponent(b);
-							if (speed.velocity == EntityFactory.MED_SPEED)
-								speed.velocity = EntityFactory.LOW_SPEED;
+							speedMapper.getComponent(b).velocity = EntityFactory.LOW_SPEED;
+							aggluMapper.getComponent(b).agglu = true;
 						}
 					}
 				}

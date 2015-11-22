@@ -14,6 +14,8 @@
 	<a name="Health" class="components.Health" />
 	<a name="DeathCertificate" class="components.DeathCertificate" />
 	<a name="VirusTypeV" class="components.VirusTypeV" />
+	<a name="Agglutined" class="components.Agglutined" />
+	<a name="MacrophageState" class="components.Macrophage" />
 	
 	<!-- Définition des entités -->
 	<!-- entité 1 -->
@@ -111,6 +113,7 @@
 		<Speed velocity="3" />
 		<TargetPos x="500" y="300" />
 		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
+		<MacrophageState current="0" hunger="2">
 		<Health />
 		<Node />
 		<e>
@@ -133,6 +136,7 @@
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<ToxinProduction freq="100" />
+		<Agglutined agglu="false" />
 		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
 		<Health />
 		<Node />
@@ -155,6 +159,7 @@
 		<TargetPos x="200" y="300" />
 		<DeathCertificate dead="false" infected="-1" wasted="-1" active="true" />
 		<VirusTypeV propagation="0.01" effectiveness="30" />
+		<Agglutined agglu="false" />
 		<TextureResource source="pictures/virus.png" id="virus" />
 		<Layered layerId="gameLayer"/>
 	</e>

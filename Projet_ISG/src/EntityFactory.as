@@ -11,6 +11,7 @@ package
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.Speed;
 	import com.lip6.genome.geography.move.component.TargetPos;
+	import components.Agglutined;
 	import components.DeathCertificate;
 	import components.ToxinDamages;
 	import components.VirusTypeV;
@@ -32,6 +33,7 @@ package
 		
 		static public function createWasteEntity(em:IEntityManager, x:Number, y:Number):void {
 			var e:IEntity = em.create();
+			e.flags = Flag.WASTE;
 			em.addComponent(e, Transform, { x:x, y:y } );
 			var val:int = 3 * Math.random();
 			var filename:String;
@@ -67,6 +69,7 @@ package
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, fields.targetPos);
 			em.addComponent(e, VirusTypeV, fields.type);
+			em.addComponent(e, Agglutined, {agglu : false});
 			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1, active:true});
 		}
 		
