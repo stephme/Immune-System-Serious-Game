@@ -1,41 +1,55 @@
 package systems {
 	import com.ktm.genome.core.logic.system.System;
+	import com.ktm.genome.core.data.component.Component;
+	import com.ktm.genome.core.entity.family.Family;
+	import com.ktm.genome.core.data.component.IComponentMapper;
+	import com.ktm.genome.core.entity.IEntity;
+	import com.ktm.genome.render.component.Transform;
+	import components.VirusTypeA;
+	import components.ToxinDamages;
+	import components.ToxinProduction;
+	import components.DeathCertificate;
+	import components.MacrophageState;
+	import components.SpecialisationLevel;
 	
 	public class T8AttackSystem extends System {
-		private var macrophageFamily:Family;
+		private var t8Family:Family;
 		private var transformMapper:IComponentMapper;
-		private var healthMapper:IComponentMapper;
 		private var deathCertificateMapper:IComponentMapper;
-		private var aggluMapper:IComponentMapper;
-		private var virusTypeVMapper:IComponentMapper;
-		private var macroStateMapper:IComponentMapper;
-		private var bactoriaMapper:IComponentMapper;
+		private var virusTypeAMapper:IComponentMapper;
 
 		override protected function onConstructed():void {
-			macrophageFamily = entityManager.getFamily(allOfGenes(MacrophageState));
+			t8Family = entityManager.getFamily(allOfGenes(MacrophageState));
 			
 			victimFamilies = new Vector.<Family>;
 			victimFamilies.push(entityManager.getFamily(allOfGenes(ToxinProductionSystem)));
+			victimFamilies.push(entityManager.getFamily(allOfGenes(MacrophageState)));
+			victimFamilies.push(entityManager.getFamily(allOfGenes(SpecialisationLevel)));
+			victimFamilies.push(entityManager.getFamily(allOfGenes(MacrophageState)));
 			victimFamilies.push(entityManager.getFamily(allOfFlags(Flag.CELL)));
 			
 			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
-			aggluMapper = geneManager.getComponentMapper(Agglutined);
-			virusTypeVMapper = geneManager.getComponentMapper(VirusTypeV);
+			virusTypeAMapper = geneManager.getComponentMapper(VirusTypeA);
 			transformMapper = geneManager.getComponentMapper(Transform);
-			macroStateMappe = geneManager.getComponentMapper(MacrophageState);
-			bactoriaMapper = geneManager.getComponentMapper(ToxinProduction);
 		}
 		
 		override protected function onProcess(delta:Number):void {
 			var victimsVector:Vector.<IEntity> = new Vector.<IEntity>;
 			for (var j:int = 0; j <  victimFamilies.length;  ++j)
 				victimsVector = victimsVector.concat(victimFamilies[j].members);
-			for (var m:int = 0; m < macrophageFamily.members.length; ++m) {
-				var macro:IEntity = macrophageFamily.members[m];
-				var macroTr:Transform = transformMapper.getComponent(macro);
-				var macroMs:MacrophageState = macroStateMapper.getComponent(macro);
-				for (var i:int = 0; i < victimsVector.length && macroMs.current < macroMs.hunger; i++) {
-
+			for (var m:int = 0; m < t8Family.members.length; ++m) {
+				var t8:IEntity = t8Family.members[m];
+				var t8Tr:Transform = transformMapper.getComponent(t8);
+				for (var i:int = 0; i < victimsVector.length; i++) {
+					var victim:IEntity = victimsVector[i];
+					if (deathCertificateMapper.getComponent(victim).dead || virusTypeAMapper.getComponent(victim) == null) continue;
+					if (Contact.virusContact(t8Tr, transformMapper.getComponent(victim), 25)) {
+						deathCertificateMapper.getComponent(victim).dead = true;
+						deathCertificateMapper.getComponent(victim).wasted = -1;
+						deathCertificateMapper.getComponent(victim).infected = -1;
+					}
+				}
+			}
 		}
 	}
 }

@@ -16,7 +16,6 @@ package systems {
 	public class MacrophageAttackSystem extends System {
 		private var macrophageFamily:Family;
 		private var transformMapper:IComponentMapper;
-		private var healthMapper:IComponentMapper;
 		private var deathCertificateMapper:IComponentMapper;
 		private var aggluMapper:IComponentMapper;
 		private var virusTypeVMapper:IComponentMapper;
