@@ -12,7 +12,7 @@
 	<a name="ToxinProduction" class="components.ToxinProduction" />
 	<a name="SpecialisationLevel" class="components.SpecialisationLevel" />
 	<a name="Health" class="components.Health" />
-	<a name="Death_Certificate" class="components.DeathCertificate" />
+	<a name="DeathCertificate" class="components.DeathCertificate" />
 	<a name="VirusTypeV" class="components.VirusTypeV" />
 	
 	<!-- Définition des entités -->
@@ -25,7 +25,7 @@
 	<e flags="8">
 		<Transform x="200" y="150" />
 		<Layer id="cellLayer" index="3" />
-		<Death_Certificate />
+		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
 		<Health />
 		<Node />
 		<e>
@@ -47,7 +47,7 @@
 		<Layer id="lymphoT8Layer" index="4" />
 		<Speed velocity="3" />
 		<TargetPos x="700" y="300" />
-		<Death_Certificate />
+		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
 		<Health />
 		<Node />
 		<e>
@@ -70,7 +70,7 @@
 		<Speed velocity="3" />
 		<TargetPos x="100" y="100" />
 		<SpecialisationLevel />
-		<Death_Certificate />
+		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
 		<Health />
 		<Node />
 		<e>
@@ -110,7 +110,7 @@
 		<Layer id="macrophageLayer" index="4" />
 		<Speed velocity="3" />
 		<TargetPos x="500" y="300" />
-		<Death_Certificate />
+		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
 		<Health />
 		<Node />
 		<e>
@@ -133,7 +133,7 @@
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<ToxinProduction freq="100" />
-		<Death_Certificate />
+		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
 		<Health />
 		<Node />
 		<e>
@@ -153,7 +153,8 @@
 		<Transform x="200" y="500" />
 		<Speed velocity="0.3" />
 		<TargetPos x="200" y="300" />
-		<Death_Certificate />
+		<DeathCertificate dead="false" infected="-1" wasted="-1" active="true" />
+		<VirusTypeV propagation="0.01" effectiveness="3" />
 		<TextureResource source="pictures/virus.png" id="virus" />
 		<Layered layerId="gameLayer"/>
 	</e>

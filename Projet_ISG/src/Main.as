@@ -52,10 +52,12 @@ package
 			
 			sm.setSystem(HealthSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(VirusInfectionSystem).setProcess(ProcessPhase.FRAME);
-			sm.setSystem(DeathCertificateSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(ToxinProductionSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(ToxinAttackSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(SpecialisationSystem).setProcess(ProcessPhase.FRAME);
+			
+			// TOUJOURS EN DERNIER
+			sm.setSystem(DeathCertificateSystem).setProcess(ProcessPhase.FRAME);
 
 			var gameURL:String = 'xml/game.entityBundle.xml';
 			EntityFactory.createResourcedEntity(world.getEntityManager(), gameURL, "game");

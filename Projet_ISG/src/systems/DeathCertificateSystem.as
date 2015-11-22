@@ -45,10 +45,11 @@ package systems
 				if (deathCerti.dead && deathCerti.active) {
 					deathCerti.active = false;					
 					var l:Layer = layerMapper.getComponent(e);
-					if (l.id == "bacteriaLayer")
+					if (l != null && l.id == "bacteriaLayer")
 						deathCerti.wasted = FEW_WASTES;
 					else if (deathCerti.wasted != -1)
 						deathCerti.wasted = MANY_WASTES;
+						
 					if (deathCerti.infected > 0) {
 						var victimVT:VirusTypeA = _VirusTypeA_Mapper.getComponent(e);
 						var ve:Virus_Field = new Virus_Field();

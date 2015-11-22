@@ -4,5 +4,7 @@ package components {
 	public class VirusTypeA extends Component {
 		public var propagation:Number;
 		public var effectiveness:int;
+		public var swapImg:Boolean;
+		public var idImg:String;
 	}
 }
