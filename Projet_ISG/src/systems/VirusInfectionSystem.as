@@ -13,6 +13,7 @@ package systems
 	import com.ktm.genome.render.component.Layered;
 	import com.ktm.genome.render.component.Layer;
 	import components.DeathCertificate;
+	import components.HolderInfection;
 	import components.Health;
 	import components.SpecialisationLevel;
 	import components.ToxinProduction;
@@ -36,6 +37,7 @@ package systems
 		private var textureResourceMapper:IComponentMapper;
 		private var layeredMapper:IComponentMapper;
 		private var layerMapper:IComponentMapper;
+		private var holderMapper:IComponentMapper;
 	
 		override protected function onConstructed():void {
 			virusEntities = entityManager.getFamily(allOfGenes(VirusTypeV));
@@ -56,8 +58,9 @@ package systems
 			textureResourceMapper = geneManager.getComponentMapper(TextureResource);
 			layeredMapper = geneManager.getComponentMapper(Layered);
 			layerMapper = geneManager.getComponentMapper(Layer);
+			holderMapper = geneManager.getComponentMapper(HolderInfection);
 		}
-			
+
 		override protected function onProcess(delta:Number):void {
 			var victimsVector:Vector.<IEntity> = new Vector.<IEntity>;
 			for (var j:int = 0; j <  victimFamilies.length;  ++j) {
@@ -65,16 +68,15 @@ package systems
 			}
 			for (var i:int = 0; i < victimsVector.length; i++) {
 				var victim:IEntity = victimsVector[i];
-//				if (victim == null) continue;
-//				var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
-//				if (victimDc.dead) || victimVt != null) continue;
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
 				if (victimVt != null) {
-					if (!victimVt.swapImg) {
+					var victimHi:HolderInfection = holderMapper.getComponent(victim);
+					if (victimHi != null && !victimVt.swapImg) {
 						var er:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
-						entityManager.addComponent(er, TextureResource, { source: "pictures/" + victimVt.idImg + "_infected.png", id : victimVt.idImg + "_infected" } );
+						entityManager.addComponent(er, Transform, {x: victimHi.x, y: victimHi.y})
+						entityManager.addComponent(er, TextureResource, { source: "pictures/" + victimHi.idImg + "_infected.png", id : victimHi.idImg + "_infected" } );
 						entityManager.addComponent(er, Layered, { layerId: layerMapper.getComponent(victim).id } );
-						victimVt.swapImg = true;
+						entityManager.removeComponent(victim, holderMapper.gene);						
 					}
 					continue;
 				}
@@ -82,8 +84,6 @@ package systems
 				var victimH:Health = healthMapper.getComponent(victim);
 				for (var h:int = 0; h < virusEntities.members.length; h++) {
 					var virus:IEntity = virusEntities.members[h];
-//					if (virus == null) continue;
-//					if (virusDc.dead) continue;
 					var virusDc:DeathCertificate = deathCertificateMapper.getComponent(virus);
 					var virusVt:VirusTypeV = virusTypeVMapper.getComponent(virus);
 					var virusTr:Transform = transformMapper.getComponent(virus);
@@ -93,12 +93,26 @@ package systems
 						var id:String = textureResourceMapper.getComponent(_e).id;
 						entityManager.addComponent(victim, VirusTypeA, {
 							propagation : virusVt.propagation,
-							effectiveness : virusVt.effectiveness,
-							swapImg : false,
-							idImg : textureResourceMapper.getComponent(_e).id
+							effectiveness : virusVt.effectiveness
+						});
+						entityManager.addComponent(victim, HolderInfection, {
+							idImg : textureResourceMapper.getComponent(_e).id,
+							x : transformMapper.getComponent(_e).x,
+							y : transformMapper.getComponent(_e).y
 						});
 						entityManager.removeComponent(_e, textureResourceMapper.gene);
 						entityManager.removeComponent(_e, layeredMapper.gene);
+						entityManager.removeComponent(_e, transformMapper.gene);
+						
+						trace("virus is killed");
+						virusDc.dead = true;
+					}
+				}
+			}
+		}
+	}
+}
+
 /*						if (textureRes != null) {
 							h.id = textureRes.id;
 							entityManager.removeComponent(_e, textureResourceMapper.gene);
@@ -111,12 +125,3 @@ package systems
 							updateHealth(n, h);
 							deathCerti.infected += h.numVirusIncrement;
 						}*/
-						
-						trace("virus is killed");
-						virusDc.dead = true;
-					}
-				}
-			}
-		}
-	}
-}

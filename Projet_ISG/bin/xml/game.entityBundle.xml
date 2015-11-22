@@ -154,7 +154,7 @@
 		<Speed velocity="0.3" />
 		<TargetPos x="200" y="300" />
 		<DeathCertificate dead="false" infected="-1" wasted="-1" active="true" />
-		<VirusTypeV propagation="0.01" effectiveness="3" />
+		<VirusTypeV propagation="0.01" effectiveness="30" />
 		<TextureResource source="pictures/virus.png" id="virus" />
 		<Layered layerId="gameLayer"/>
 	</e>
