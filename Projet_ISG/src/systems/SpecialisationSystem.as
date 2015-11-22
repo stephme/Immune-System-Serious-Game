@@ -13,7 +13,7 @@ package systems
 	import com.lip6.genome.geography.move.component.Speed;
 	import components.SpecialisationLevel;
 	import components.ToxinProduction;
-	import components.Virus_Type;
+	import components.VirusTypeV;
 	/**
 	 * ...
 	 * @author Stéphane
@@ -38,7 +38,7 @@ package systems
 		override protected function onConstructed():void {
 			lymphoBEntities = entityManager.getFamily(allOfGenes(SpecialisationLevel));
 			bacteriaEntities = entityManager.getFamily(allOfGenes(ToxinProduction));
-			virusEntities = entityManager.getFamily(allOfGenes(Virus_Type));
+			virusEntities = entityManager.getFamily(allOfGenes(VirusTypeV));
 			
 			// Définition des mappers
 			specialisationLevelMapper = geneManager.getComponentMapper(SpecialisationLevel);
@@ -48,7 +48,7 @@ package systems
 			layeredMapper = geneManager.getComponentMapper(Layered);
 			layerMapper = geneManager.getComponentMapper(Layer);
 			speedMapper = geneManager.getComponentMapper(Speed);
-			virusTypeMapper = geneManager.getComponentMapper(Virus_Type);
+			virusTypeMapper = geneManager.getComponentMapper(VirusTypeV);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -95,7 +95,7 @@ package systems
 						v = virusEntities.members[j];
 						if (Contact.virusContact(lbtr, transformMapper.getComponent(v), ACTION_AREA_RADIUS)) {
 							speed = speedMapper.getComponent(v);
-							var vt:Virus_Type = virusTypeMapper.getComponent(v);
+							var vt:VirusTypeV = virusTypeMapper.getComponent(v);
 							if (speed.velocity == EntityFactory.MED_SPEED && vt.effectiveness > 0) {
 								// Le virus est agglutine
 								speed.velocity = EntityFactory.LOW_SPEED;

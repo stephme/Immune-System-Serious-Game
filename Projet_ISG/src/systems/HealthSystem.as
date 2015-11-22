@@ -10,7 +10,7 @@ package systems
 	import com.ktm.genome.render.component.Layered;
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.resource.component.TextureResource;
-	import components.Death_Certificate;
+	import components.DeathCertificate;
 	import components.Health;
 	/**
 	 * ...
@@ -28,11 +28,11 @@ package systems
 		private var transformMapper:IComponentMapper;
 		
 		override protected function onConstructed():void {
-			entities = entityManager.getFamily(allOfGenes(Health,Death_Certificate));
+			entities = entityManager.getFamily(allOfGenes(Health,DeathCertificate));
 			
 			nodeMapper = geneManager.getComponentMapper(Node);
 			healthMapper = geneManager.getComponentMapper(Health);
-			deathCertificateMapper = geneManager.getComponentMapper(Death_Certificate);
+			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
 			textureResourceMapper = geneManager.getComponentMapper(TextureResource);
 			layeredMapper = geneManager.getComponentMapper(Layered);
 			layerMapper = geneManager.getComponentMapper(Layer);
@@ -44,7 +44,7 @@ package systems
 				var e:IEntity = entities.members[i];
 				var h:Health = healthMapper.getComponent(e);
 				var n:Node = nodeMapper.getComponent(e);
-				var deathCerti:Death_Certificate = deathCertificateMapper.getComponent(e);
+				var deathCerti:DeathCertificate = deathCertificateMapper.getComponent(e);
 				if (h.currentPV <= 0)
 					deathCerti.dead = true;
 				else if (deathCerti.infected > 0) {

@@ -1,6 +1,7 @@
 package 
 {
-	
+	import com.ktm.genome.core.data.component.Component;
+	import com.ktm.genome.core.data.component.IComponentMapper;
 	import com.ktm.genome.core.entity.IEntity;
 	import com.ktm.genome.game.component.Node;
 	import com.ktm.genome.render.component.Layered;
@@ -10,14 +11,14 @@ package
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.Speed;
 	import com.lip6.genome.geography.move.component.TargetPos;
+	import components.DeathCertificate;
 	import components.ToxinDamages;
-	import components.Virus_Type;
+	import components.VirusTypeV;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
 	public class EntityFactory 
 	{
-		
 		public static const LOW_SPEED:Number = 0.1;
 		public static const MED_SPEED:Number = 0.3;
 		public static const HIGH_SPEED:Number = 0.7;
@@ -44,6 +45,7 @@ package
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: LOW_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
+			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1, active:true});
 		}
 		
 		static public function createToxinEntity(em:IEntityManager, x:Number, y:Number):void {
@@ -54,6 +56,7 @@ package
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
 			em.addComponent(e, ToxinDamages, { active:true } );
+			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1, active:true});
 		}
 		
 		static public function createVirusEntity(em:IEntityManager, fields:Virus_Field):void {
@@ -63,7 +66,8 @@ package
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, fields.targetPos);
-			em.addComponent(e, Virus_Type, fields.type);
+			em.addComponent(e, VirusTypeV, fields.type);
+			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1, active:true});
 		}
 		
 		static public function createSelectionCircleEntity(em:IEntityManager, layerId:String, x:Number, y:Number):IEntity {
@@ -87,12 +91,10 @@ package
 			tim.addEventListener(TimerEvent.TIMER_COMPLETE, kill(t));
 			function kill(t:IEntity):Function {
 				return function():void {
-					em.killEntity(t);	
+					em.killEntity(t);
 				}
 			}
 			tim.start();
 		}
-		
 	}
-
 }

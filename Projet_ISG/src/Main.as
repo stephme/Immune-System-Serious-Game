@@ -3,7 +3,7 @@ package
 	import com.ktm.genome.game.manager.NodeManager;
 	import com.ktm.genome.resource.entity.ExtendedXMLEntityBuilder;
 	import com.ktm.genome.resource.entity.IEntityBuilder;
-	import components.Virus_Type;
+	import components.VirusTypeV;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -17,7 +17,7 @@ package
 	import com.ktm.genome.resource.manager.ResourceManager;
 	import com.lip6.genome.geography.move.system.MoveToSystem;
 	import flash.events.MouseEvent;
-	import systems.Death_Certificate_System;
+	import systems.DeathCertificateSystem;
 	import systems.HealthSystem;
 	import systems.RandomMovingSystem;
 	import systems.BacteriaRotationSystem;
@@ -52,20 +52,13 @@ package
 			
 			sm.setSystem(HealthSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(VirusInfectionSystem).setProcess(ProcessPhase.FRAME);
-			sm.setSystem(Death_Certificate_System).setProcess(ProcessPhase.FRAME);
+			sm.setSystem(DeathCertificateSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(ToxinProductionSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(ToxinAttackSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(SpecialisationSystem).setProcess(ProcessPhase.FRAME);
 
 			var gameURL:String = 'xml/game.entityBundle.xml';
 			EntityFactory.createResourcedEntity(world.getEntityManager(), gameURL, "game");
-			
-			//A ENLEVER
-			var ve:Virus_Field = new Virus_Field();
-			ve.transform = { x : 200, y : 500 };
-			ve.type = { propagation: 0.5, effectiveness: 2 };
-			ve.targetPos = { x: 200, y : 300 };
-			EntityFactory.createVirusEntity(world.getEntityManager(), ve);
 		}
 		
 	}
