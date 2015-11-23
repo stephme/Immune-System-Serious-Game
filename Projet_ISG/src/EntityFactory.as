@@ -82,10 +82,20 @@ package
 			return e;
 		}
 		
+		static public function createPlaceHolderEntity(em:IEntityManager, obj:Object):IEntity {
+			var e:IEntity = em.create();
+			trace(obj);
+			trace(e);
+			em.addComponent(e, Transform, { x : obj.x, y : obj.y, rotation : obj.rotation } );
+			em.addComponent(e, TextureResource, { source : obj.source, id : obj.id} );
+			em.addComponent(e, Layered, { layerId : "gameLayer" } );
+			return e;
+		}
+		
 		static public function killEntity(em:IEntityManager, t:IEntity, ttr:Transform):void {
 			var pas:Number = 0.1;
 			var tim:Timer = new Timer(100, 1 / pas);
-/*			tim.addEventListener(TimerEvent.TIMER, fadeOut(ttr, pas));
+			tim.addEventListener(TimerEvent.TIMER, fadeOut(ttr, pas));
 			function fadeOut(ttr:Transform, pas:Number):Function {
 				return function():void {
 					ttr.alpha -= pas;
@@ -95,9 +105,10 @@ package
 			tim.addEventListener(TimerEvent.TIMER_COMPLETE, kill(t));
 			function kill(t:IEntity):Function {
 				return function():void {
+					em.killEntity(t);
 				}
 			}
-			tim.start();*/
+			tim.start();
 		}
 	}
 }

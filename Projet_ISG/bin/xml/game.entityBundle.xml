@@ -46,7 +46,7 @@
 	<!-- Lymphocyte T8-->
 	<e flags="2">
 		<Transform x="700" y="300" />
-		<Layer id="lymphoT8Layer01" index="4" />
+		<Layer id="lymphoT8Layer01" index="5" />
 		<Speed velocity="3" />
 		<TargetPos x="700" y="300" />
 		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
