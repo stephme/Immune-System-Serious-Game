@@ -5,6 +5,8 @@ package systems {
 	import com.ktm.genome.core.logic.system.System;
 	import com.ktm.genome.core.data.component.IComponentMapper;
 	import com.ktm.genome.render.component.Transform;
+	import com.ktm.genome.core.entity.family.matcher.allOfFlags;
+	import com.ktm.genome.core.entity.family.matcher.allOfGenes;
 	import components.VirusTypeV;
 	import components.ToxinDamages;
 	import components.ToxinProduction;
@@ -14,13 +16,13 @@ package systems {
 	import com.ktm.genome.core.entity.IEntity;
 	
 	public class MacrophageAttackSystem extends System {
+		private var victimFamilies:Vector.<Family>;
 		private var macrophageFamily:Family;
 		private var transformMapper:IComponentMapper;
 		private var deathCertificateMapper:IComponentMapper;
 		private var aggluMapper:IComponentMapper;
 		private var virusTypeVMapper:IComponentMapper;
 		private var macroStateMapper:IComponentMapper;
-		private var bactoriaMapper:IComponentMapper;
 
 		override protected function onConstructed():void {
 			macrophageFamily = entityManager.getFamily(allOfGenes(MacrophageState));
@@ -35,8 +37,7 @@ package systems {
 			aggluMapper = geneManager.getComponentMapper(Agglutined);
 			virusTypeVMapper = geneManager.getComponentMapper(VirusTypeV);
 			transformMapper = geneManager.getComponentMapper(Transform);
-			macroStateMappe = geneManager.getComponentMapper(MacrophageState);
-			bactoriaMapper = geneManager.getComponentMapper(ToxinProduction);
+			macroStateMapper = geneManager.getComponentMapper(MacrophageState);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -53,10 +54,6 @@ package systems {
 					if (virusTypeVMapper.getComponent(victim) != null && aggluMapper.getComponent(victim).agglu == false) continue;
 					if (Contact.virusContact(macroTr, transformMapper.getComponent(victim), 25)) {
 						deathCertificateMapper.getComponent(victim).dead = true;
-						if (bactoriaMapper.getComponent(victim) != null) {
-							deathCertificateMapper.getComponent(victim).infected = -1;
-							deathCertificateMapper.getComponent(victim).wasted = -1;
-						}
 						macroMs.current++;
 					}
 				}

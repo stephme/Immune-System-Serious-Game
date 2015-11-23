@@ -27,6 +27,7 @@ package
 	import systems.UserMovingSystem;
 	import systems.VirusInfectionSystem;
 	import systems.MacrophageAttackSystem;
+	import systems.T8AttackSystem;
 	
 	public class Main extends Sprite {
 		
@@ -52,6 +53,7 @@ package
 			sm.setSystem(RandomMovingSystem).setProcess(ProcessPhase.FRAME);
 			
 			sm.setSystem(MacrophageAttackSystem).setProcess(ProcessPhase.FRAME);
+			sm.setSystem(T8AttackSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(VirusInfectionSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(ToxinProductionSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(ToxinAttackSystem).setProcess(ProcessPhase.FRAME);
