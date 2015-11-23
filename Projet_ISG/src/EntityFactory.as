@@ -84,8 +84,6 @@ package
 		
 		static public function createPlaceHolderEntity(em:IEntityManager, obj:Object):IEntity {
 			var e:IEntity = em.create();
-			trace(obj);
-			trace(e);
 			em.addComponent(e, Transform, { x : obj.x, y : obj.y, rotation : obj.rotation } );
 			em.addComponent(e, TextureResource, { source : obj.source, id : obj.id} );
 			em.addComponent(e, Layered, { layerId : "gameLayer" } );

@@ -23,6 +23,7 @@ package systems {
 		private var aggluMapper:IComponentMapper;
 		private var virusTypeVMapper:IComponentMapper;
 		private var macroStateMapper:IComponentMapper;
+		private var toxinProductionMapper:IComponentMapper;
 
 		override protected function onConstructed():void {
 			macrophageFamily = entityManager.getFamily(allOfGenes(MacrophageState));
@@ -38,6 +39,7 @@ package systems {
 			virusTypeVMapper = geneManager.getComponentMapper(VirusTypeV);
 			transformMapper = geneManager.getComponentMapper(Transform);
 			macroStateMapper = geneManager.getComponentMapper(MacrophageState);
+			toxinProductionMapper = geneManager.getComponentMapper(ToxinProduction);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -54,6 +56,10 @@ package systems {
 					if (virusTypeVMapper.getComponent(victim) != null && aggluMapper.getComponent(victim).agglu == false) continue;
 					if (Contact.virusContact(macroTr, transformMapper.getComponent(victim), 25)) {
 						deathCertificateMapper.getComponent(victim).dead = true;
+						if (toxinProductionMapper.getComponent(victim) != null) {
+							deathCertificateMapper.getComponent(victim).infected = -1;
+							deathCertificateMapper.getComponent(victim).wasted = -1;
+						}
 						macroMs.current++;
 					}
 				}

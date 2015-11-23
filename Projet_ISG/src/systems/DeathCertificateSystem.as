@@ -53,7 +53,7 @@ package systems
 				
 				if (victimDc.dead && victimDc.active) {
 					victimDc.active = false;
-					if (_ToxinProduction_Mapper.getComponent(victim))
+					if (_ToxinProduction_Mapper.getComponent(victim) != null && victimDc.wasted != -1)
 						victimDc.wasted = FEW_WASTES;
 					else if (victimDc.wasted != -1)
 						victimDc.wasted = MANY_WASTES;
@@ -102,7 +102,6 @@ package systems
 						for (var n:int = 0; n < node.outNodes.length; ++n) {
 							var _e:IEntity = node.outNodes[n].entity;
 							entityManager.killEntity(_e);
-							trace("salut" + node.outNodes.length);
 						}
 					}
 					entityManager.killEntity(victim);
