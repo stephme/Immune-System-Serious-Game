@@ -48,6 +48,7 @@ package systems
 				
 				var p:INode = n.outNodes[1];
 				var tre:Transform = transformMapper.getComponent(p.entity);
+				if (tre == null) continue;
 				
 				var hb:INode = n.outNodes[0];
 				var trhb:Transform = transformMapper.getComponent(hb.entity);

@@ -7,6 +7,7 @@ package systems
 	import com.ktm.genome.core.logic.system.System;
 	import com.ktm.genome.render.component.Transform;
 	import com.lip6.genome.geography.move.component.TargetPos;
+	import components.DeathCertificate;
 	import components.ToxinProduction;
 	/**
 	 * ...
@@ -17,6 +18,7 @@ package systems
 		private var bacteriaEntities:Family;
 		private var transformMapper:IComponentMapper;
 		private var toxinProductionMapper:IComponentMapper;
+		private var deathCertificateMapper:IComponentMapper;
 		
 		override protected function onConstructed():void {
 			bacteriaEntities = entityManager.getFamily(allOfGenes(ToxinProduction));
@@ -24,6 +26,7 @@ package systems
 			// Définition des mappers
 			toxinProductionMapper = geneManager.getComponentMapper(ToxinProduction);
 			transformMapper = geneManager.getComponentMapper(Transform);
+			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
 		}
 		
 		/*
@@ -33,6 +36,7 @@ package systems
 		override protected function onProcess(delta:Number):void {
 			for (var i:int = 0 ; i < bacteriaEntities.members.length ; i++) {
 				var e:IEntity = bacteriaEntities.members[i];
+				if (deathCertificateMapper.getComponent(e).dead) continue;
 				var tp:ToxinProduction = toxinProductionMapper.getComponent(e);
 				if (++tp.cpt == tp.freq) {
 					var tr:Transform = transformMapper.getComponent(e);

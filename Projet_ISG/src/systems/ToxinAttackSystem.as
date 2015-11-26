@@ -14,6 +14,7 @@ package systems
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.TargetPos;
 	import com.ktm.genome.core.logic.system.System;
+	import components.DeathCertificate;
 	import components.Health;
 	import components.SpecialisationLevel;
 	import components.ToxinDamages;
@@ -30,6 +31,7 @@ package systems
 		private var toxinDamagesMapper:IComponentMapper;
 		private var textureResourceMapper:IComponentMapper;
 		private var nodeMapper:IComponentMapper;
+		private var deathCertificateMapper:IComponentMapper;
 		
 		override protected function onConstructed():void {
 			toxinEntities = entityManager.getFamily(allOfGenes(ToxinDamages));
@@ -45,6 +47,7 @@ package systems
 			toxinDamagesMapper = geneManager.getComponentMapper(ToxinDamages);
 			textureResourceMapper = geneManager.getComponentMapper(TextureResource);
 			nodeMapper = geneManager.getComponentMapper(Node);
+			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -53,8 +56,10 @@ package systems
 					for (var h:int = 0; h < toxinEntities.members.length; h++) {
 						var t:IEntity = toxinEntities.members[h];
 						var td:ToxinDamages = toxinDamagesMapper.getComponent(t);
+						if (deathCertificateMapper.getComponent(t).dead) continue;
 						if (td.active) {
 							var v:IEntity = victimFamilies[i].members[j];
+							if (deathCertificateMapper.getComponent(v).dead) continue;
 							if (toxinContact(t, v)) {
 								var health:Health = healthMapper.getComponent(v);
 								health.currentPV -= ToxinDamages.DAMAGES;
