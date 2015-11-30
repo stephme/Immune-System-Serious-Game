@@ -12,6 +12,7 @@ package systems
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.resource.component.TextureResource;
 	import com.lip6.genome.geography.move.component.TargetPos;
+	import components.MacrophageState;
 	import components.SpecialisationLevel;
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
@@ -40,9 +41,9 @@ package systems
 				stage.addEventListener(MouseEvent.RIGHT_CLICK, moveEntity);
 				
 				families = new Vector.<Family>();
-				families.push(entityManager.getFamily(allOfFlags(Flag.LYMPHO_T8)));
-				families.push(entityManager.getFamily(allOfFlags(Flag.MACRO)));
-				families.push(entityManager.getFamily(allOfGenes(SpecialisationLevel)));
+				families.push(entityManager.getFamily(allOfFlags(Flag.LYMPHO_T8))); //lymphoT8
+				families.push(entityManager.getFamily(allOfGenes(MacrophageState))); //Macrophage
+				families.push(entityManager.getFamily(allOfGenes(SpecialisationLevel))); //lymphoB
 				
 				transformMapper = geneManager.getComponentMapper(Transform);
 				targetPosMapper = geneManager.getComponentMapper(TargetPos);
@@ -64,11 +65,11 @@ package systems
 								endSelection();
 							entitySelected = en;
 							//Ajout de l'entité pour le cercle de selection
-							var p:Node = nodeMapper.getComponent(en);
+							var n:Node = nodeMapper.getComponent(en);
 							var l:Layer = layerMapper.getComponent(en);
-							var _tr:Transform = transformMapper.getComponent(p.outNodes[1].entity);
+							var _tr:Transform = transformMapper.getComponent(n.outNodes[1].entity);
 							var c:IEntity = EntityFactory.createSelectionCircleEntity(entityManager, l.id, _tr.x, _tr.y);
-							p.outNodes.push(nodeMapper.getComponent(c));
+							n.outNodes.push(nodeMapper.getComponent(c));
 							trace("selected");
 						} else {
 							trace("already selected");

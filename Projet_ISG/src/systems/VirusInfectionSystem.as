@@ -15,6 +15,7 @@ package systems
 	import components.DeathCertificate;
 	import components.HolderInfection;
 	import components.Health;
+	import components.MacrophageState;
 	import components.SpecialisationLevel;
 	import components.ToxinProduction;
 	import components.VirusTypeA;
@@ -26,6 +27,7 @@ package systems
 	 * @author Stéphane
 	 */
 	public class VirusInfectionSystem extends System {
+		
 		private var virusEntities:Family;
 		private var victimFamilies:Vector.<Family>;
 		private var transformMapper:IComponentMapper;
@@ -48,7 +50,7 @@ package systems
 			victimFamilies.push(entityManager.getFamily(allOfGenes(SpecialisationLevel))); //lympho B
 			victimFamilies.push(entityManager.getFamily(allOfFlags(Flag.CELL))); // cell
 			victimFamilies.push(entityManager.getFamily(allOfGenes(ToxinProduction))); // bactery
-			victimFamilies.push(entityManager.getFamily(allOfFlags(Flag.MACRO))); // macrophage
+			victimFamilies.push(entityManager.getFamily(allOfGenes(MacrophageState))); // macrophage
 
 			transformMapper = geneManager.getComponentMapper(Transform);
 			virusTypeVMapper = geneManager.getComponentMapper(VirusTypeV);
@@ -70,22 +72,26 @@ package systems
 			}
 			for (var i:int = 0; i < victimsVector.length; i++) {
 				var victim:IEntity = victimsVector[i];
-				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
 				var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
 				if (victimDc.dead) continue;
-				if (victimVt != null) {
+				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
+				if (victimVt != null) { //La victime est infectée
 					var victimHi:HolderInfection = holderMapper.getComponent(victim);
 					if (victimHi != null) {
 						var er:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
-						entityManager.addComponent(er, Transform, {x: victimHi.x, y: victimHi.y})
+						var tr:Transform = transformMapper.getComponent(er);
 						entityManager.addComponent(er, TextureResource, { source: "pictures/" + victimHi.idImg + "_infected.png", id : victimHi.idImg + "_infected" } );
 						entityManager.addComponent(er, Layered, { layerId: layerMapper.getComponent(victim).id } );
-						entityManager.removeComponent(victim, holderMapper.gene);						
+						tr.dirty = true;
+						tr.dirtyPosition = true;
+						tr.dirtyAlpha = true;
+						tr.dirtyRotation = true;
+						entityManager.removeComponent(victim, holderMapper.gene);					
 					}
 					continue;
 				}
-				var victimTr:Transform = transformMapper.getComponent(victim);
 				var victimH:Health = healthMapper.getComponent(victim);
+				var victimTr:Transform = transformMapper.getComponent(victim);
 				for (var h:int = 0; h < virusEntities.members.length; h++) {
 					var virus:IEntity = virusEntities.members[h];
 					var virusDc:DeathCertificate = deathCertificateMapper.getComponent(virus);
@@ -96,19 +102,15 @@ package systems
 					if (Contact.virusContact(victimTr, virusTr, 25)) {
 						trace("entity is infected by a virus");
 						var _e:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
-						var id:String = textureResourceMapper.getComponent(_e).id;
 						entityManager.addComponent(victim, VirusTypeA, {
 							propagation : virusVt.propagation,
 							effectiveness : virusVt.effectiveness
 						});
 						entityManager.addComponent(victim, HolderInfection, {
-							idImg : textureResourceMapper.getComponent(_e).id,
-							x : transformMapper.getComponent(_e).x,
-							y : transformMapper.getComponent(_e).y
+							idImg : textureResourceMapper.getComponent(_e).id
 						});
 						entityManager.removeComponent(_e, textureResourceMapper.gene);
 						entityManager.removeComponent(_e, layeredMapper.gene);
-						entityManager.removeComponent(_e, transformMapper.gene);
 						
 						trace("virus is killed");
 						virusDc.dead = true;
@@ -118,16 +120,3 @@ package systems
 		}
 	}
 }
-
-/*						if (textureRes != null) {
-							h.id = textureRes.id;
-							entityManager.removeComponent(_e, textureResourceMapper.gene);
-							entityManager.removeComponent(_e, layeredMapper.gene);
-							//entityManager.removeComponent(_e, transformMapper.gene);
-						} else {
-							//entityManager.addComponent(_e, Transform, { x : -25, y : -25} );
-							entityManager.addComponent(_e, TextureResource, { source: "pictures/" + h.id + "_infected.png", id : h.id + "_infected" } );
-							entityManager.addComponent(_e, Layered, { layerId: layerMapper.getComponent(e).id } );
-							updateHealth(n, h);
-							deathCerti.infected += h.numVirusIncrement;
-						}*/

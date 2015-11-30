@@ -33,7 +33,6 @@ package systems
 		private var layerMapper:IComponentMapper;
 		private var speedMapper:IComponentMapper;
 		private var aggluMapper:IComponentMapper;
-		private var virusTypeMapper:IComponentMapper;
 		private var deathCertificateMapper:IComponentMapper;
 		
 		override protected function onConstructed():void {
@@ -49,7 +48,6 @@ package systems
 			layeredMapper = geneManager.getComponentMapper(Layered);
 			layerMapper = geneManager.getComponentMapper(Layer);
 			speedMapper = geneManager.getComponentMapper(Speed);
-			virusTypeMapper = geneManager.getComponentMapper(VirusTypeV);
 			aggluMapper = geneManager.getComponentMapper(Agglutined);
 			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
 		}
@@ -59,6 +57,7 @@ package systems
 			var lbtr:Transform, s:SpecialisationLevel, n:Node, btr:Transform, speed:Speed;
 			for (var i:int = 0; i < lymphoBEntities.members.length; i++) {
 				lb = lymphoBEntities.members[i];
+				if (deathCertificateMapper.getComponent(lb).dead) continue;
 				lbtr = transformMapper.getComponent(lb);
 				s = specialisationLevelMapper.getComponent(lb);
 				n = nodeMapper.getComponent(lb);
@@ -70,7 +69,6 @@ package systems
 						if (deathCertificateMapper.getComponent(b).dead) continue;
 						if (Contact.bacteriaContact(lbtr, transformMapper.getComponent(b), RECOGNITION_AREA_RADIUS)) {
 							s.bacteriaSpecLevel += SpecialisationLevel.SPE_INCREMENT;
-							trace(s.bacteriaSpecLevel);
 							if (s.bacteriaSpecLevel == 100) {
 								s.spec = SpecialisationEnum.BACTERIA;
 								trace("lymphoB is bacteria specialised");
@@ -84,7 +82,6 @@ package systems
 						if (deathCertificateMapper.getComponent(v).dead) continue;
 						if (Contact.virusContact(lbtr, transformMapper.getComponent(v), RECOGNITION_AREA_RADIUS)) {
 							s.virusSpecLevel += SpecialisationLevel.SPE_INCREMENT;
-							trace(s.virusSpecLevel);
 							if (s.virusSpecLevel == 100) {
 								s.spec = SpecialisationEnum.VIRUS;
 								trace("lymphoB is virus specialised");
@@ -117,19 +114,22 @@ package systems
 			}
 		}
 		
-		private function removeRecognitionArea(s:SpecialisationLevel,n:Node):void {
+		private function removeRecognitionArea(s:SpecialisationLevel, n:Node):void {
 			var e:IEntity = n.outNodes[2].entity;
 			entityManager.removeComponent(e, textureResourceMapper.gene);
 			entityManager.removeComponent(e, layeredMapper.gene);
-			entityManager.removeComponent(e, transformMapper.gene);
 			s.addActionArea = true;
 		}
 		
-		private function addActionArea(s:SpecialisationLevel,n:Node,id:String):void {
+		private function addActionArea(s:SpecialisationLevel, n:Node, id:String):void {
 			var e:IEntity = n.outNodes[2].entity;
+			var tr:Transform = transformMapper.getComponent(e);
 			entityManager.addComponent(e, TextureResource, { source: "pictures/actionArea.png", id : "actionArea" } );
 			entityManager.addComponent(e, Layered, { layerId: id } );
-			entityManager.addComponent(e, Transform, { x:-ACTION_AREA_RADIUS, y:-ACTION_AREA_RADIUS, scaleX: ACTION_AREA_RADIUS / 50, scaleY: ACTION_AREA_RADIUS / 50, alpha: 0.2} );
+			tr.dirty = true;
+			tr.dirtyPosition = true;
+			tr.dirtyAlpha = true;
+			tr.dirtyRotation = true;
 			s.addActionArea = false;
 		}
 		

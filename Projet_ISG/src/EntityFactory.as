@@ -13,7 +13,6 @@ package
 	import com.lip6.genome.geography.move.component.TargetPos;
 	import components.Agglutined;
 	import components.DeathCertificate;
-	import components.ToxinDamages;
 	import components.VirusTypeV;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -47,18 +46,18 @@ package
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: LOW_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
-			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1, active:true});
+			em.addComponent(e, DeathCertificate, { infected:-1, wasted:-1 });
 		}
 		
 		static public function createToxinEntity(em:IEntityManager, x:Number, y:Number):void {
 			var e:IEntity = em.create();
+			e.flags = Flag.TOXIN;
 			em.addComponent(e, Transform, { x:x, y:y } );
 			em.addComponent(e, TextureResource, { source: "pictures/toxin.png", id : "toxine" } );
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
-			em.addComponent(e, ToxinDamages, { active:true } );
-			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1, active:true});
+			em.addComponent(e, DeathCertificate, { infected:-1, wasted:-1 });
 		}
 		
 		static public function createVirusEntity(em:IEntityManager, fields:Virus_Field):void {
@@ -69,8 +68,8 @@ package
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, fields.targetPos);
 			em.addComponent(e, VirusTypeV, fields.type);
-			em.addComponent(e, Agglutined, {agglu : false});
-			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1, active:true});
+			em.addComponent(e, Agglutined);
+			em.addComponent(e, DeathCertificate, { infected:-1, wasted:-1 });
 		}
 		
 		static public function createSelectionCircleEntity(em:IEntityManager, layerId:String, x:Number, y:Number):IEntity {

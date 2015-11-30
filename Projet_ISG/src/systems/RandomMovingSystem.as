@@ -11,6 +11,7 @@ package systems
 	import com.ktm.genome.render.component.Transform;
 	import com.lip6.genome.geography.move.component.TargetPos;
 	import com.ktm.genome.core.logic.system.System;
+	import components.MacrophageState;
 	import components.SpecialisationLevel;
 	 
 	public class RandomMovingSystem extends System {
@@ -22,7 +23,7 @@ package systems
 		override protected function onConstructed() :void {
 			super.onConstructed();
 			// Paramétrisation de la famille 
-			movingEntities = entityManager.getFamily(allOfGenes(Transform, TargetPos), noneOfFlags(Flag.MACRO), noneOfFlags(Flag.LYMPHO_T8), noneOfGenes(SpecialisationLevel));
+			movingEntities = entityManager.getFamily(allOfGenes(Transform, TargetPos), noneOfGenes(MacrophageState), noneOfFlags(Flag.LYMPHO_T8), noneOfGenes(SpecialisationLevel));
 			// Définition des mappers
 			transformMapper = geneManager.getComponentMapper(Transform);
 			targetMapper = geneManager.getComponentMapper(TargetPos);

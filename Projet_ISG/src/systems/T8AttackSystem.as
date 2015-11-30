@@ -8,7 +8,6 @@ package systems {
 	import com.ktm.genome.core.entity.IEntity;
 	import com.ktm.genome.render.component.Transform;
 	import components.VirusTypeA;
-	import components.ToxinDamages;
 	import components.ToxinProduction;
 	import components.DeathCertificate;
 	import components.MacrophageState;
@@ -25,12 +24,11 @@ package systems {
 			t8Family = entityManager.getFamily(allOfFlags(Flag.LYMPHO_T8));
 			
 			victimFamilies = new Vector.<Family>;
-			victimFamilies.push(entityManager.getFamily(allOfGenes(ToxinProduction)));
-			victimFamilies.push(entityManager.getFamily(allOfGenes(MacrophageState)));
-			victimFamilies.push(entityManager.getFamily(allOfGenes(SpecialisationLevel)));
-			victimFamilies.push(entityManager.getFamily(allOfGenes(MacrophageState)));
-			victimFamilies.push(entityManager.getFamily(allOfFlags(Flag.CELL)));
-			victimFamilies.push(entityManager.getFamily(allOfFlags(Flag.LYMPHO_T8)));
+			victimFamilies.push(entityManager.getFamily(allOfGenes(ToxinProduction))); //bacterie
+			victimFamilies.push(entityManager.getFamily(allOfGenes(MacrophageState))); //macrophage
+			victimFamilies.push(entityManager.getFamily(allOfGenes(SpecialisationLevel))); //lymphoB
+			victimFamilies.push(entityManager.getFamily(allOfFlags(Flag.CELL))); //cell
+			victimFamilies.push(entityManager.getFamily(allOfFlags(Flag.LYMPHO_T8))); //lymphoT8
 			
 			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
 			virusTypeAMapper = geneManager.getComponentMapper(VirusTypeA);
@@ -47,11 +45,11 @@ package systems {
 				if (deathCertificateMapper.getComponent(t8).dead) continue;
 				for (var i:int = 0; i < victimsVector.length; i++) {
 					var victim:IEntity = victimsVector[i];
-					if (deathCertificateMapper.getComponent(victim).dead || virusTypeAMapper.getComponent(victim) == null) continue;
+					var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
+					if (victimDc.dead || virusTypeAMapper.getComponent(victim) == null) continue;
 					if (Contact.virusContact(t8Tr, transformMapper.getComponent(victim), 25)) {
-						deathCertificateMapper.getComponent(victim).dead = true;
-						deathCertificateMapper.getComponent(victim).wasted = -1;
-						deathCertificateMapper.getComponent(victim).infected = -1;
+						victimDc.dead = true;
+						victimDc.infected = -1;
 					}
 				}
 			}

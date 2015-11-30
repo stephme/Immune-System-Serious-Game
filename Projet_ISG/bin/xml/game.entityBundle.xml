@@ -27,7 +27,7 @@
 	<e flags="8">
 		<Transform x="200" y="150" />
 		<Layer id="cellLayer01" index="3" />
-		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
+		<DeathCertificate />
 		<Health />
 		<Node />
 		<e>
@@ -49,7 +49,7 @@
 		<Layer id="lymphoT8Layer01" index="5" />
 		<Speed velocity="3" />
 		<TargetPos x="700" y="300" />
-		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
+		<DeathCertificate />
 		<Health />
 		<Node />
 		<e>
@@ -72,7 +72,7 @@
 		<Speed velocity="3" />
 		<TargetPos x="100" y="100" />
 		<SpecialisationLevel />
-		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
+		<DeathCertificate />
 		<Health />
 		<Node />
 		<e>
@@ -107,13 +107,13 @@
 		</e>
 	</e>
 	<!-- Macrophage -->
-	<e flags="4">
+	<e>
 		<Transform x="500" y="300" />
 		<Layer id="macrophageLayer01" index="4" />
 		<Speed velocity="3" />
 		<TargetPos x="500" y="300" />
-		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
-		<MacrophageState current="0" hunger="10" />
+		<DeathCertificate />
+		<MacrophageState eatingDamages="10" />
 		<Health />
 		<Node />
 		<e>
@@ -136,8 +136,8 @@
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<ToxinProduction freq="100" />
-		<Agglutined agglu="false" />
-		<DeathCertificate dead="false" infected="0" wasted="0" active="true" />
+		<Agglutined />
+		<DeathCertificate />
 		<Health />
 		<Node />
 		<e>
@@ -153,16 +153,18 @@
 			<Node />
 		</e>
 	</e>
+	<!--Virus-->
 	<e>
 		<Transform x="200" y="500" />
 		<Speed velocity="0.3" />
 		<TargetPos x="200" y="300" />
-		<DeathCertificate dead="false" infected="-1" wasted="-1" active="true" />
-		<VirusTypeV propagation="0.01" effectiveness="5" />
-		<Agglutined agglu="false" />
+		<DeathCertificate infected="-1" wasted="-1" />
+		<VirusTypeV propagation="0.01" effectiveness="2" />
+		<Agglutined />
 		<TextureResource source="pictures/virus.png" id="virus" />
 		<Layered layerId="gameLayer" />
 	</e>
+	
 </resource>
 
 

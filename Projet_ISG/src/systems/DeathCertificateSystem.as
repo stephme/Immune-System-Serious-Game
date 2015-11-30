@@ -7,14 +7,12 @@ package systems
 	import com.ktm.genome.core.entity.IEntity;
 	import com.ktm.genome.core.logic.system.System;
 	import com.ktm.genome.game.component.Node;
-	import com.ktm.genome.render.component.Layer;
 	import com.ktm.genome.render.component.Layered;
 	import com.ktm.genome.resource.component.TextureResource;
+	import com.ktm.genome.render.component.Transform;
 	import components.VirusTypeA;
 	import components.ToxinProduction;
-	
 	import components.DeathCertificate;
-	import com.ktm.genome.render.component.Transform;
 	
 	public class DeathCertificateSystem extends System {
 		
@@ -25,7 +23,6 @@ package systems
 		private var _Death_Certificate_Mapper:IComponentMapper;
 		private var _Transform_Mapper:IComponentMapper;
 		private var _VirusTypeA_Mapper:IComponentMapper;
-		private var _Layer_Mapper:IComponentMapper;
 		private var _Node_Mapper:IComponentMapper;
 		private var _ToxinProduction_Mapper:IComponentMapper;
 		private var _TextureResource_Mapper:IComponentMapper;
@@ -37,13 +34,13 @@ package systems
 			_Death_Certificate_Mapper = geneManager.getComponentMapper(DeathCertificate);
 			_Transform_Mapper = geneManager.getComponentMapper(Transform);
 			_VirusTypeA_Mapper = geneManager.getComponentMapper(VirusTypeA);
-			_Layer_Mapper = geneManager.getComponentMapper(Layer);
 			_Node_Mapper = geneManager.getComponentMapper(Node);
 			_ToxinProduction_Mapper = geneManager.getComponentMapper(ToxinProduction);
 			_TextureResource_Mapper = geneManager.getComponentMapper(TextureResource);
 		}
 		
 		override protected function onProcess(delta:Number):void {
+			trace("DeathCertificateSystem");
 			var familySize:Number = _Dead_Entities.members.length; 
 			var j:int;
 			for (var i:int = 0 ; i < familySize ; i++) {
@@ -51,9 +48,8 @@ package systems
 				var victimDc:DeathCertificate = _Death_Certificate_Mapper.getComponent(victim);
 				var victimTr:Transform = _Transform_Mapper.getComponent(victim);
 				
-				if (victimDc.dead && victimDc.active) {
-					victimDc.active = false;
-					if (_ToxinProduction_Mapper.getComponent(victim) != null && victimDc.wasted != -1)
+				if (victimDc.dead) {
+					if (_ToxinProduction_Mapper.getComponent(victim) != null)
 						victimDc.wasted = FEW_WASTES;
 					else if (victimDc.wasted != -1)
 						victimDc.wasted = MANY_WASTES;
@@ -69,10 +65,8 @@ package systems
 						}
 					}
 					
-					if (victimDc.wasted > 0) {
-						for (j = 0; j < victimDc.wasted; j++)
-							EntityFactory.createWasteEntity(entityManager, victimTr.x, victimTr.y);
-					}
+					for (j = 0; j < victimDc.wasted; j++)
+						EntityFactory.createWasteEntity(entityManager, victimTr.x, victimTr.y);
 					
 					if (UserMovingSystem.entitySelected == victim)
 						UserMovingSystem.entitySelected = null;
@@ -80,7 +74,8 @@ package systems
 					trace("entity is dead");
 					trace("number of virus generated : " + int(victimDc.infected));
 					trace("number of wastes generated : " + victimDc.wasted);
-					var obj:Object = {};
+					
+					var obj:Object = { };
 					if ((node = _Node_Mapper.getComponent(victim)) != null) {
 						obj.x = victimTr.x + _Transform_Mapper.getComponent(node.outNodes[1].entity).x;
 						obj.y = victimTr.y + _Transform_Mapper.getComponent(node.outNodes[1].entity).y;
