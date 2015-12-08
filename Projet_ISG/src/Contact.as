@@ -53,8 +53,8 @@ package
 		public static function wasteContact(mtr:Transform, wtr:Transform):Boolean {
 			if (Math.sqrt(Math.pow(wtr.x - mtr.x, 2) + Math.pow(wtr.y - mtr.y, 2)) <= 25 ||
 				Math.sqrt(Math.pow((wtr.x+25) - mtr.x, 2) + Math.pow(wtr.y - mtr.y, 2)) <= 25 ||
-				Math.sqrt(Math.pow(wtr.x - mtr.x, 2) + Math.pow((wtr.y+16) - mtr.y, 2)) <= 25 ||
-				Math.sqrt(Math.pow((wtr.x+25) - mtr.x, 2) + Math.pow((wtr.y+16) - mtr.y, 2)) <= 25)
+				Math.sqrt(Math.pow(wtr.x - mtr.x, 2) + Math.pow((wtr.y+25) - mtr.y, 2)) <= 25 ||
+				Math.sqrt(Math.pow((wtr.x+25) - mtr.x, 2) + Math.pow((wtr.y+25) - mtr.y, 2)) <= 25)
 				return true;
 			return false;
 		}

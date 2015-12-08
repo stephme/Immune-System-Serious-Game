@@ -102,7 +102,7 @@ package systems
 			if ((rot >= 90 && rot <= 270) || (rot <= -90 && rot >= -270)) {
 				a = Math.abs(rot) - 180;
 				y = Math.sin(Math.abs(a) * (Math.PI / 180)) * 54;
-				if ((rot >= 180 && rot <= 270) || (rot <= -90 && rot >= -180))
+				if ((rot > 180 && rot <= 270) || (rot <= -90 && rot > -180))
 					y *= -1;
 				x = -Math.cos(Math.abs(a) * (Math.PI / 180)) * 54;
 			}
