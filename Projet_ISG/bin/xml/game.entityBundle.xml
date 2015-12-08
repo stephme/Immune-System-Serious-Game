@@ -16,6 +16,7 @@
 	<a name="VirusTypeV" class="components.VirusTypeV" />
 	<a name="Agglutined" class="components.Agglutined" />
 	<a name="MacrophageState" class="components.MacrophageState" />
+	<a name="BacteriaInRotation" class="components.BacteriaInRotation" />
 	
 	<!-- Définition des entités -->
 	<!-- entité 1 -->
@@ -135,19 +136,20 @@
 		<Layer id="bacteriaLayer01" index="2" />
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
+		<BacteriaInRotation pas="0.08" />
 		<ToxinProduction freq="100" />
 		<Agglutined />
 		<DeathCertificate />
 		<Health />
 		<Node />
 		<e>
-			<Transform x="0" y="-32" />
+			<Transform x="0" y="-27.5" />
 			<TextureResource source="pictures/healthBar.png" id="healthBar" />
 			<Layered layerId="bacteriaLayer01"/>
 			<Node />
 		</e>
 		<e>
-			<Transform x="0" y="-7" rotation="0" />
+			<Transform x="0" y="-7.5" rotation="0" />
 			<TextureResource source="pictures/bactery.png" id="bactery" />
 			<Layered layerId="bacteriaLayer01"/>
 			<Node />
@@ -159,7 +161,7 @@
 		<Speed velocity="0.3" />
 		<TargetPos x="200" y="300" />
 		<DeathCertificate infected="-1" wasted="-1" />
-		<VirusTypeV propagation="0.01" effectiveness="2" />
+		<VirusTypeV propagation="0.2" effectiveness="2" />
 		<Agglutined />
 		<TextureResource source="pictures/virus.png" id="virus" />
 		<Layered layerId="gameLayer" />

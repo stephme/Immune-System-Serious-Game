@@ -6,6 +6,7 @@ package systems {
 	import com.ktm.genome.core.entity.family.Family;
 	import com.ktm.genome.core.data.component.IComponentMapper;
 	import com.ktm.genome.core.entity.IEntity;
+	import com.ktm.genome.game.component.Node;
 	import com.ktm.genome.render.component.Transform;
 	import components.VirusTypeA;
 	import components.ToxinProduction;
@@ -19,6 +20,8 @@ package systems {
 		private var transformMapper:IComponentMapper;
 		private var deathCertificateMapper:IComponentMapper;
 		private var virusTypeAMapper:IComponentMapper;
+		private var toxinProductionMapper:IComponentMapper;
+		private var nodeMapper:IComponentMapper;
 
 		override protected function onConstructed():void {
 			t8Family = entityManager.getFamily(allOfFlags(Flag.LYMPHO_T8));
@@ -33,6 +36,8 @@ package systems {
 			deathCertificateMapper = geneManager.getComponentMapper(DeathCertificate);
 			virusTypeAMapper = geneManager.getComponentMapper(VirusTypeA);
 			transformMapper = geneManager.getComponentMapper(Transform);
+			toxinProductionMapper = geneManager.getComponentMapper(ToxinProduction);
+			nodeMapper = geneManager.getComponentMapper(Node);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -47,7 +52,9 @@ package systems {
 					var victim:IEntity = victimsVector[i];
 					var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
 					if (victimDc.dead || virusTypeAMapper.getComponent(victim) == null) continue;
-					if (Contact.virusContact(t8Tr, transformMapper.getComponent(victim), 25)) {
+					var victimTp:ToxinProduction = toxinProductionMapper.getComponent(victim);
+					var victimTr:Transform =  transformMapper.getComponent(victim);
+					if ((victimTp != null && Contact.bacteryContact(t8Tr, victimTr, transformMapper.getComponent(nodeMapper.getComponent(victim).outNodes[1].entity), 25)) || (victimTp == null && Contact.entityContact(t8Tr, victimTr))) {
 						victimDc.dead = true;
 						victimDc.infected = -1;
 					}

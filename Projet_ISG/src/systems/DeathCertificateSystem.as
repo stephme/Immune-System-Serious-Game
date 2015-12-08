@@ -40,7 +40,6 @@ package systems
 		}
 		
 		override protected function onProcess(delta:Number):void {
-			trace("DeathCertificateSystem");
 			var familySize:Number = _Dead_Entities.members.length; 
 			var j:int;
 			for (var i:int = 0 ; i < familySize ; i++) {

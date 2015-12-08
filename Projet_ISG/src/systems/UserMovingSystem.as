@@ -5,6 +5,7 @@ package systems
 	import com.ktm.genome.core.entity.family.matcher.allOfFlags;
 	import com.ktm.genome.core.entity.family.matcher.allOfGenes;
 	import com.ktm.genome.core.entity.IEntity;
+	import com.ktm.genome.core.entity.IEntityManager;
 	import com.ktm.genome.core.logic.system.System;
 	import com.ktm.genome.game.component.INode;
 	import com.ktm.genome.game.component.Node;
@@ -64,12 +65,7 @@ package systems
 							if (entitySelected != null)
 								endSelection();
 							entitySelected = en;
-							//Ajout de l'entité pour le cercle de selection
-							var n:Node = nodeMapper.getComponent(en);
-							var l:Layer = layerMapper.getComponent(en);
-							var _tr:Transform = transformMapper.getComponent(n.outNodes[1].entity);
-							var c:IEntity = EntityFactory.createSelectionCircleEntity(entityManager, l.id, _tr.x, _tr.y);
-							n.outNodes.push(nodeMapper.getComponent(c));
+							addSelectionCircleEntity(entityManager, nodeMapper, transformMapper, en, layerMapper.getComponent(en).id);
 							trace("selected");
 						} else {
 							trace("already selected");
@@ -80,6 +76,14 @@ package systems
 			}
 			if (entitySelected != null)
 				endSelection();
+		}
+		
+		public static function addSelectionCircleEntity(entityManager:IEntityManager, nodeMapper:IComponentMapper, transformMapper:IComponentMapper, en:IEntity, id:String):void {
+			//Ajout de l'entité pour le cercle de selection
+			var n:Node = nodeMapper.getComponent(en);
+			var _tr:Transform = transformMapper.getComponent(n.outNodes[1].entity);
+			var c:IEntity = EntityFactory.createSelectionCircleEntity(entityManager, id, _tr.x, _tr.y);
+			n.outNodes.push(nodeMapper.getComponent(c));
 		}
 		
 		private function moveEntity(e:MouseEvent):void {

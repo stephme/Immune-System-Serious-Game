@@ -8,7 +8,7 @@ package components
 	public class BacteriaInRotation extends Component {
 		
 		public var pas:Number;
-		public var leftToRotate:Number;
+		public var leftToRotate:Number = 0;
 		
 	}
 

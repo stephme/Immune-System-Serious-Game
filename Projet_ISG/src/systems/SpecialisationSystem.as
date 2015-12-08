@@ -54,7 +54,7 @@ package systems
 		
 		override protected function onProcess(delta:Number):void {
 			var lb:IEntity, b:IEntity, v:IEntity;
-			var lbtr:Transform, s:SpecialisationLevel, n:Node, btr:Transform, speed:Speed;
+			var lbtr:Transform, s:SpecialisationLevel, n:Node, btr:Transform, _btr:Transform, speed:Speed;
 			for (var i:int = 0; i < lymphoBEntities.members.length; i++) {
 				lb = lymphoBEntities.members[i];
 				if (deathCertificateMapper.getComponent(lb).dead) continue;
@@ -67,7 +67,8 @@ package systems
 					for (var j:int = 0; j < bacteriaEntities.members.length; j++) {
 						b = bacteriaEntities.members[j];
 						if (deathCertificateMapper.getComponent(b).dead) continue;
-						if (Contact.bacteriaContact(lbtr, transformMapper.getComponent(b), RECOGNITION_AREA_RADIUS)) {
+						_btr = transformMapper.getComponent(nodeMapper.getComponent(b).outNodes[1].entity);
+						if (Contact.bacteryContact(lbtr, transformMapper.getComponent(b), _btr, RECOGNITION_AREA_RADIUS)) {
 							s.bacteriaSpecLevel += SpecialisationLevel.SPE_INCREMENT;
 							if (s.bacteriaSpecLevel == 100) {
 								s.spec = SpecialisationEnum.BACTERIA;
@@ -105,7 +106,8 @@ package systems
 					for (j = 0; j < bacteriaEntities.members.length; j++) {
 						b = bacteriaEntities.members[j];
 						if (deathCertificateMapper.getComponent(b).dead) continue;
-						if (Contact.bacteriaContact(lbtr, transformMapper.getComponent(b), ACTION_AREA_RADIUS)) {
+						_btr = transformMapper.getComponent(nodeMapper.getComponent(b).outNodes[1].entity);
+						if (Contact.bacteryContact(lbtr, transformMapper.getComponent(b), _btr, ACTION_AREA_RADIUS)) {
 							speedMapper.getComponent(b).velocity = EntityFactory.LOW_SPEED;
 							aggluMapper.getComponent(b).agglu = true;
 						}
@@ -127,9 +129,12 @@ package systems
 			entityManager.addComponent(e, TextureResource, { source: "pictures/actionArea.png", id : "actionArea" } );
 			entityManager.addComponent(e, Layered, { layerId: id } );
 			tr.dirty = true;
-			tr.dirtyPosition = true;
 			tr.dirtyAlpha = true;
 			tr.dirtyRotation = true;
+			tr.x = -ACTION_AREA_RADIUS;
+			tr.y = -ACTION_AREA_RADIUS;
+			tr.scaleX = ACTION_AREA_RADIUS / 50;
+			tr.scaleY = ACTION_AREA_RADIUS / 50;
 			s.addActionArea = false;
 		}
 		

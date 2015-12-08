@@ -48,7 +48,6 @@ package systems {
 		}
 		
 		override protected function onProcess(delta:Number):void {
-			trace("MacrophageAttackSystem");
 			var victimsVector:Vector.<IEntity> = new Vector.<IEntity>;
 			for (var j:int = 0; j <  victimFamilies.length;  ++j)
 				victimsVector = victimsVector.concat(victimFamilies[j].members);
@@ -61,11 +60,17 @@ package systems {
 				for (var i:int = 0; i < victimsVector.length; i++) {
 					var victim:IEntity = victimsVector[i];
 					var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
-					if (victimDc.dead) continue;
-					if (virusTypeVMapper.getComponent(victim) != null && !aggluMapper.getComponent(victim).agglu) continue;
-					if (Contact.virusContact(macroTr, transformMapper.getComponent(victim), 25)) {
+					if (victimDc == null || victimDc.dead) continue;
+					var virusTypeV:VirusTypeV = virusTypeVMapper.getComponent(victim);
+					if (virusTypeV != null && !aggluMapper.getComponent(victim).agglu) continue;
+					var victimTr:Transform =  transformMapper.getComponent(victim);
+					var victimTp:ToxinProduction = toxinProductionMapper.getComponent(victim);
+					if ((virusTypeV != null && Contact.virusContact(macroTr, victimTr, 25)) || 
+						(victim.flags == Flag.WASTE && Contact.wasteContact(macroTr, victimTr)) ||
+						(victim.flags == Flag.TOXIN && Contact.toxinContact(victimTr, macroTr)) ||
+						(victimTp != null && Contact.bacteryContact(macroTr, victimTr, transformMapper.getComponent(nodeMapper.getComponent(victim).outNodes[1].entity), 25))) {
 						victimDc.dead = true;
-						if (toxinProductionMapper.getComponent(victim) != null)
+						if (victimTp != null)
 							victimDc.infected = -1;
 						macroHealth.currentPV -= macroMs.eatingDamages;
 						HealthSystem.updateHealthBar(transformMapper.getComponent(nodeMapper.getComponent(macro).outNodes[0].entity), macroHealth);

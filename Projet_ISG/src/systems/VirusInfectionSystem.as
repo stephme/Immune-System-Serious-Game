@@ -7,6 +7,7 @@ package systems
 	import com.ktm.genome.core.entity.IEntity;
 	import com.ktm.genome.core.entity.impl.Entity;
 	import com.ktm.genome.core.logic.system.System;
+	import com.ktm.genome.game.component.INode;
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.game.component.Node;
 	import com.ktm.genome.resource.component.TextureResource;
@@ -41,6 +42,7 @@ package systems
 		private var layerMapper:IComponentMapper;
 		private var holderMapper:IComponentMapper;
 		private var aggluMapper:IComponentMapper;
+		private var toxinProductionMapper:IComponentMapper;
 	
 		override protected function onConstructed():void {
 			virusEntities = entityManager.getFamily(allOfGenes(VirusTypeV));
@@ -63,6 +65,7 @@ package systems
 			layerMapper = geneManager.getComponentMapper(Layer);
 			holderMapper = geneManager.getComponentMapper(HolderInfection);
 			aggluMapper = geneManager.getComponentMapper(Agglutined);
+			toxinProductionMapper = geneManager.getComponentMapper(ToxinProduction);
 		}
 
 		override protected function onProcess(delta:Number):void {
@@ -73,7 +76,7 @@ package systems
 			for (var i:int = 0; i < victimsVector.length; i++) {
 				var victim:IEntity = victimsVector[i];
 				var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
-				if (victimDc.dead) continue;
+				if (victimDc == null || victimDc.dead) continue;
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
 				if (victimVt != null) { //La victime est infectée
 					var victimHi:HolderInfection = holderMapper.getComponent(victim);
@@ -86,12 +89,15 @@ package systems
 						tr.dirtyPosition = true;
 						tr.dirtyAlpha = true;
 						tr.dirtyRotation = true;
-						entityManager.removeComponent(victim, holderMapper.gene);					
+						if (victimHi.isSelected)
+							UserMovingSystem.addSelectionCircleEntity(entityManager, nodeMapper, transformMapper, victim, layerMapper.getComponent(victim).id);
+						entityManager.removeComponent(victim, holderMapper.gene);				
 					}
 					continue;
 				}
 				var victimH:Health = healthMapper.getComponent(victim);
 				var victimTr:Transform = transformMapper.getComponent(victim);
+				var victimTp:ToxinProduction = toxinProductionMapper.getComponent(victim);
 				for (var h:int = 0; h < virusEntities.members.length; h++) {
 					var virus:IEntity = virusEntities.members[h];
 					var virusDc:DeathCertificate = deathCertificateMapper.getComponent(virus);
@@ -99,15 +105,22 @@ package systems
 					if (virusDc.dead || virusAg.agglu) continue;
 					var virusVt:VirusTypeV = virusTypeVMapper.getComponent(virus);
 					var virusTr:Transform = transformMapper.getComponent(virus);
-					if (Contact.virusContact(victimTr, virusTr, 25)) {
+					if ((victimTp != null && Contact.virusWithBacteryContact(virusTr, victimTr, transformMapper.getComponent(nodeMapper.getComponent(victim).outNodes[1].entity))) || (victimTp == null && Contact.virusContact(victimTr, virusTr, 25))) {
 						trace("entity is infected by a virus");
-						var _e:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
 						entityManager.addComponent(victim, VirusTypeA, {
 							propagation : virusVt.propagation,
 							effectiveness : virusVt.effectiveness
 						});
+						var isSelected:Boolean = false;
+						if (victim == UserMovingSystem.entitySelected) {
+							isSelected = true;
+							var n:INode = nodeMapper.getComponent(victim).outNodes.pop();
+							entityManager.killEntity(n.entity);
+						}
+						var _e:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
 						entityManager.addComponent(victim, HolderInfection, {
-							idImg : textureResourceMapper.getComponent(_e).id
+							idImg : textureResourceMapper.getComponent(_e).id,
+							isSelected : isSelected
 						});
 						entityManager.removeComponent(_e, textureResourceMapper.gene);
 						entityManager.removeComponent(_e, layeredMapper.gene);
