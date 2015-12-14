@@ -41,10 +41,10 @@ package
 		
 		//Contact entre une toxine et une victime
 		public static function toxinContact(ttr:Transform, vtr:Transform):Boolean {
-			if (Math.sqrt(Math.pow(ttr.x - vtr.x, 2) + Math.pow(ttr.y - vtr.y, 2)) <= 25 ||
-				Math.sqrt(Math.pow((ttr.x+25) - vtr.x, 2) + Math.pow(ttr.y - vtr.y, 2)) <= 25 ||
-				Math.sqrt(Math.pow(ttr.x - vtr.x, 2) + Math.pow((ttr.y+16) - vtr.y, 2)) <= 25 ||
-				Math.sqrt(Math.pow((ttr.x+25) - vtr.x, 2) + Math.pow((ttr.y+16) - vtr.y, 2)) <= 25)
+			if (Math.sqrt(Math.pow((ttr.x+2) - vtr.x, 2) + Math.pow((ttr.y+1) - vtr.y, 2)) <= 25 ||
+				Math.sqrt(Math.pow((ttr.x+23) - vtr.x, 2) + Math.pow((ttr.y+1) - vtr.y, 2)) <= 25 ||
+				Math.sqrt(Math.pow((ttr.x+2) - vtr.x, 2) + Math.pow((ttr.y+15) - vtr.y, 2)) <= 25 ||
+				Math.sqrt(Math.pow((ttr.x+23) - vtr.x, 2) + Math.pow((ttr.y+15) - vtr.y, 2)) <= 25)
 				return true;
 			return false;
 		}

@@ -137,7 +137,7 @@
 		<Speed velocity="2" />
 		<TargetPos x="300" y="300" />
 		<BacteriaInRotation pas="0.08" />
-		<ToxinProduction freq="100" />
+		<ToxinProduction />
 		<Agglutined />
 		<DeathCertificate />
 		<Health />
@@ -155,6 +155,31 @@
 			<Node />
 		</e>
 	</e>
+	<!-- Bacterie -->
+	<e>
+		<Transform x="600" y="600" />
+		<Layer id="bacteriaLayer02" index="2" />
+		<Speed velocity="2" />
+		<TargetPos x="300" y="500" />
+		<BacteriaInRotation pas="0.08" />
+		<ToxinProduction delta="5" />
+		<Agglutined />
+		<DeathCertificate />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="0" y="-27.5" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="bacteriaLayer02"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="0" y="-7.5" rotation="0" />
+			<TextureResource source="pictures/bactery.png" id="bactery" />
+			<Layered layerId="bacteriaLayer02"/>
+			<Node />
+		</e>
+	</e>
 	<!--Virus-->
 	<e>
 		<Transform x="200" y="500" />
@@ -162,6 +187,17 @@
 		<TargetPos x="200" y="300" />
 		<DeathCertificate infected="-1" wasted="-1" />
 		<VirusTypeV propagation="0.2" effectiveness="2" />
+		<Agglutined />
+		<TextureResource source="pictures/virus.png" id="virus" />
+		<Layered layerId="gameLayer" />
+	</e>
+	<!--Virus-->
+	<e>
+		<Transform x="100" y="300" />
+		<Speed velocity="0.3" />
+		<TargetPos x="500" y="500" />
+		<DeathCertificate infected="-1" wasted="-1" />
+		<VirusTypeV propagation="0.4" effectiveness="4" />
 		<Agglutined />
 		<TextureResource source="pictures/virus.png" id="virus" />
 		<Layered layerId="gameLayer" />

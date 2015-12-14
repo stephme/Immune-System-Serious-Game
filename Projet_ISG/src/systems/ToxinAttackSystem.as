@@ -51,7 +51,7 @@ package systems
 			for (var h:int = 0; h < toxinEntities.members.length; h++) {
 				var t:IEntity = toxinEntities.members[h];
 				var dc:DeathCertificate = deathCertificateMapper.getComponent(t);
-				if (dc == null || dc.dead) continue;
+				if (dc.dead) continue;
 				for (var i:int = 0; i < victimFamilies.length; i++) {
 					for (var j:int = 0; j < victimFamilies[i].members.length; j++) {
 						var v:IEntity = victimFamilies[i].members[j];

@@ -7,8 +7,8 @@ package components
 	 */
 	public class ToxinProduction extends Component {
 		
-		public var freq:int;
-		public var cpt:int = 0;
+		public var delta:Number = 10;
+		public var cpt:Number = 0;
 		
 	}
 

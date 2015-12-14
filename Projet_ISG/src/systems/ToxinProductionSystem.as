@@ -40,7 +40,8 @@ package systems
 				var e:IEntity = bacteriaEntities.members[i];
 				if (deathCertificateMapper.getComponent(e).dead) continue;
 				var tp:ToxinProduction = toxinProductionMapper.getComponent(e);
-				if (++tp.cpt == tp.freq) {
+				tp.cpt += delta / 1000;
+				if (tp.cpt >= tp.delta) {
 					var tr:Transform = transformMapper.getComponent(e);
 					var _tr:Transform = transformMapper.getComponent(nodeMapper.getComponent(e).outNodes[1].entity);
 					EntityFactory.createToxinEntity(entityManager, tr.x + _tr.x, tr.y + _tr.y);

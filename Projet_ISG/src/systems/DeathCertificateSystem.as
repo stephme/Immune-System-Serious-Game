@@ -91,9 +91,9 @@ package systems
 					var ne:IEntity = EntityFactory.createPlaceHolderEntity(entityManager, obj);
 					obj = null;
 					EntityFactory.killEntity(entityManager, ne, _Transform_Mapper.getComponent(ne));
-					var node:Node;
-					if ((node = _Node_Mapper.getComponent(victim)) != null) {
-						for (var n:int = 0; n < node.outNodes.length; ++n) {
+					var node:Node = _Node_Mapper.getComponent(victim); 
+					if (node != null) {
+						for (var n:int = 0; n < node.outNodes.length; n++) {
 							var _e:IEntity = node.outNodes[n].entity;
 							entityManager.killEntity(_e);
 						}

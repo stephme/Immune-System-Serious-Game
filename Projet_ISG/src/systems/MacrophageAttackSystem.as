@@ -8,6 +8,8 @@ package systems {
 	import com.ktm.genome.game.component.Node;
 	import com.ktm.genome.render.component.Transform;
 	import com.ktm.genome.core.entity.family.matcher.allOfGenes;
+	import com.ktm.genome.resource.component.TextureResource;
+	import com.lip6.genome.geography.move.component.Speed;
 	import components.Health;
 	import components.MacrophageState;
 	import components.VirusTypeV;
@@ -27,6 +29,10 @@ package systems {
 		private var healthMapper:IComponentMapper;
 		private var macroStateMapper:IComponentMapper;
 		private var nodeMapper:IComponentMapper;
+		
+		//A ENLEVER
+		private var textureResourceMapper:IComponentMapper;
+		private var speedMapper:IComponentMapper;
 
 		override protected function onConstructed():void {
 			macrophageFamily = entityManager.getFamily(allOfGenes(MacrophageState));
@@ -45,6 +51,10 @@ package systems {
 			healthMapper = geneManager.getComponentMapper(Health);
 			nodeMapper = geneManager.getComponentMapper(Node);
 			macroStateMapper = geneManager.getComponentMapper(MacrophageState);
+			
+			//A ENLEVER
+			textureResourceMapper = geneManager.getComponentMapper(TextureResource);
+			speedMapper = geneManager.getComponentMapper(Speed);
 		}
 		
 		override protected function onProcess(delta:Number):void {
@@ -60,7 +70,16 @@ package systems {
 				for (var i:int = 0; i < victimsVector.length; i++) {
 					var victim:IEntity = victimsVector[i];
 					var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
-					if (victimDc == null || victimDc.dead) continue;
+					/**/
+					if (victimDc == null) {
+						trace("flag : " + victim.flags);
+						if (textureResourceMapper.getComponent(victim) != null)
+							trace("textResource.id : " + textureResourceMapper.getComponent(victim).id);
+						if (speedMapper.getComponent(victim) != null)
+							trace("has a speed component");
+					}
+					/**/
+					if (victimDc.dead) continue;
 					var virusTypeV:VirusTypeV = virusTypeVMapper.getComponent(victim);
 					if (virusTypeV != null && !aggluMapper.getComponent(victim).agglu) continue;
 					var victimTr:Transform =  transformMapper.getComponent(victim);

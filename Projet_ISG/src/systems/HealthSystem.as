@@ -45,11 +45,14 @@ package systems
 					continue;
 				}
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(e);
-				if (victimVt != null && ++h.cpt == h.freq) {
-					h.currentPV -= victimVt.effectiveness;
-					deathCerti.infected += victimVt.propagation;
-					h.cpt = 0;
-					updateHealthBar(transformMapper.getComponent(nodeMapper.getComponent(e).outNodes[0].entity), h);
+				if (victimVt != null) {
+					h.cpt += delta / 1000;
+					if (h.cpt >= h.delta) {
+						h.currentPV -= victimVt.effectiveness;
+						deathCerti.infected += victimVt.propagation;
+						h.cpt = 0;
+						updateHealthBar(transformMapper.getComponent(nodeMapper.getComponent(e).outNodes[0].entity), h);
+					}
 				}
 			}
 		}

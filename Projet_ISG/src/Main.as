@@ -47,7 +47,7 @@ package
 			sm.setSystem(MoveToSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(new RenderSystem(this)).setProcess(ProcessPhase.FRAME);
 			
-			sm.setSystem(new UserMovingSystem(stage)).setProcess(ProcessPhase.FRAME);
+			sm.setSystem(new UserMovingSystem(stage)).setProcess(ProcessPhase.TICK, int.MAX_VALUE);
 			//RotationSystem doit être avant RandomMovingSystem
 			sm.setSystem(BacteriaRotationSystem).setProcess(ProcessPhase.FRAME);
 			sm.setSystem(RandomMovingSystem).setProcess(ProcessPhase.FRAME);

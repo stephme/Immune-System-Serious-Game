@@ -5,8 +5,8 @@ package components
 	public class Health extends Component {
 		
 		public var currentPV:int = 100;
-		public var freq:int = 30;
-		public var cpt:int = 0;
+		public var delta:Number = 0.7;
+		public var cpt:Number = 0;
 	
 	}
 
