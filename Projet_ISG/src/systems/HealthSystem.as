@@ -40,10 +40,6 @@ package systems
 				var deathCerti:DeathCertificate = deathCertificateMapper.getComponent(e);
 				if (deathCerti.dead) continue;
 				var h:Health = healthMapper.getComponent(e);
-				if (h.currentPV <= 0) {
-					deathCerti.dead = true;
-					continue;
-				}
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(e);
 				if (victimVt != null) {
 					h.cpt += delta / 1000;
@@ -53,6 +49,11 @@ package systems
 						h.cpt = 0;
 						updateHealthBar(transformMapper.getComponent(nodeMapper.getComponent(e).outNodes[0].entity), h);
 					}
+				}
+				
+				if (h.currentPV <= 0) {
+					deathCerti.dead = true;
+					continue;
 				}
 			}
 		}

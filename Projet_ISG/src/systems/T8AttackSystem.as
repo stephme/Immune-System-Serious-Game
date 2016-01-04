@@ -54,7 +54,8 @@ package systems {
 					if (victimDc.dead || virusTypeAMapper.getComponent(victim) == null) continue;
 					var victimTp:ToxinProduction = toxinProductionMapper.getComponent(victim);
 					var victimTr:Transform =  transformMapper.getComponent(victim);
-					if ((victimTp != null && Contact.bacteryContact(t8Tr, victimTr, transformMapper.getComponent(nodeMapper.getComponent(victim).outNodes[1].entity), 25)) || (victimTp == null && Contact.entityContact(t8Tr, victimTr))) {
+					if ((victimTp != null && Contact.bacteryContact(t8Tr, victimTr, transformMapper.getComponent(nodeMapper.getComponent(victim).outNodes[1].entity), 25)) ||
+						(victimTp == null && Contact.entityContact(t8Tr, victimTr))) {
 						victimDc.dead = true;
 						victimDc.infected = -1;
 					}

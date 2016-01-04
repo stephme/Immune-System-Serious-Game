@@ -46,7 +46,7 @@ package
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: LOW_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
-			em.addComponent(e, DeathCertificate, { infected:-1, wasted:-1 });
+			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1 });
 		}
 		
 		static public function createToxinEntity(em:IEntityManager, x:Number, y:Number):void {
@@ -57,7 +57,7 @@ package
 			em.addComponent(e, Layered, { layerId: "gameLayer" } );
 			em.addComponent(e, Speed, { velocity: MED_SPEED } );
 			em.addComponent(e, TargetPos, { x:x, y:y } );
-			em.addComponent(e, DeathCertificate, { infected:-1, wasted:-1 });
+			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1 });
 		}
 		
 		static public function createVirusEntity(em:IEntityManager, fields:Virus_Field):void {
@@ -69,7 +69,7 @@ package
 			em.addComponent(e, TargetPos, fields.targetPos);
 			em.addComponent(e, VirusTypeV, fields.type);
 			em.addComponent(e, Agglutined);
-			em.addComponent(e, DeathCertificate, { infected:-1, wasted:-1 });
+			em.addComponent(e, DeathCertificate, {dead:false, infected:-1, wasted:-1 });
 		}
 		
 		static public function createSelectionCircleEntity(em:IEntityManager, layerId:String, x:Number, y:Number):IEntity {
