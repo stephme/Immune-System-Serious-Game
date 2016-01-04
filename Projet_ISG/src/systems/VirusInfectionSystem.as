@@ -114,10 +114,15 @@ package systems
 						var isSelected:Boolean = false;
 						if (victim == UserMovingSystem.entitySelected) {
 							isSelected = true;
-							var n:INode = nodeMapper.getComponent(victim).outNodes.pop();
-							entityManager.killEntity(n.entity);
+							var node:Node = nodeMapper.getComponent(victim);
+							var n:int = EntityFactory.getNodeByFlags(node, Flag.SELECTED);
+							trace("le numero de node pour la selection " + n);
+							entityManager.killEntity(node.outNodes[n].entity);
+							node.outNodes.splice(n, 1);
 						}
-						var _e:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
+						var coucou:int = EntityFactory.getNodeByFlags(nodeMapper.getComponent(victim), Flag.IMAGED);
+						trace("le numero de node pour limage " + coucou);
+						var _e:IEntity = nodeMapper.getComponent(victim).outNodes[coucou].entity;
 						entityManager.addComponent(victim, HolderInfection, {
 							idImg : textureResourceMapper.getComponent(_e).id,
 							isSelected : isSelected

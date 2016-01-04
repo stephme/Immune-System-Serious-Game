@@ -74,6 +74,7 @@ package
 		
 		static public function createSelectionCircleEntity(em:IEntityManager, layerId:String, x:Number, y:Number):IEntity {
 			var e:IEntity = em.create();
+			e.flags = Flag.SELECTED;
 			em.addComponent(e, Transform, { x:x, y:y } );
 			em.addComponent(e, TextureResource, { source: "pictures/selection.png", id : "selection" } );
 			em.addComponent(e, Layered, { layerId: layerId } );
@@ -106,6 +107,15 @@ package
 				}
 			}
 			tim.start();
+		}
+		
+		static public function getNodeByFlags(parentNode:Node, flag:int):int {
+			for (var i:int = 0; i < parentNode.outNodes.length; ++i) {
+				if (parentNode.outNodes[i].entity.flags == flag) {
+					return i;
+				}
+			}
+			return -1;
 		}
 	}
 }

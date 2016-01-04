@@ -37,7 +37,7 @@
 			<Layered layerId="cellLayer01"/>
 			<Node />
 		</e>
-		<e>
+		<e flags="32">
 			<Transform x="-25" y="-25" />
 			<TextureResource source="pictures/structCell.png" id="structCell" />
 			<Layered layerId="cellLayer01" />
@@ -59,7 +59,7 @@
 			<Layered layerId="lymphoT8Layer01"/>
 			<Node />
 		</e>
-		<e>
+		<e flags="32">
 			<Transform x="-25" y="-25" />
 			<TextureResource source="pictures/tCell.png" id="tCell" />
 			<Layered layerId="lymphoT8Layer01"/>
@@ -82,7 +82,7 @@
 			<Layered layerId="lymphoBLayer01"/>
 			<Node />
 		</e>
-		<e>
+		<e flags="32">
 			<Transform x="-25" y="-25" />
 			<TextureResource source="pictures/bCell.png" id="bCell" />
 			<Layered layerId="lymphoBLayer01"/>
@@ -123,7 +123,7 @@
 			<Layered layerId="macrophageLayer01"/>
 			<Node />
 		</e>
-		<e>
+		<e flags="32">
 			<Transform x="-25" y="-25" />
 			<TextureResource source="pictures/macro.png" id="macro" />
 			<Layered layerId="macrophageLayer01"/>
@@ -148,7 +148,7 @@
 			<Layered layerId="bacteriaLayer01"/>
 			<Node />
 		</e>
-		<e>
+		<e flags="32">
 			<Transform x="0" y="-7.5" rotation="0" />
 			<TextureResource source="pictures/bactery.png" id="bactery" />
 			<Layered layerId="bacteriaLayer01"/>
@@ -173,7 +173,7 @@
 			<Layered layerId="bacteriaLayer02"/>
 			<Node />
 		</e>
-		<e>
+		<e flags="32">
 			<Transform x="0" y="-7.5" rotation="0" />
 			<TextureResource source="pictures/bactery.png" id="bactery" />
 			<Layered layerId="bacteriaLayer02"/>

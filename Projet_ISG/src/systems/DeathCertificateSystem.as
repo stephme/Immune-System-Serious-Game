@@ -88,17 +88,26 @@ package systems
 						obj.source = _TextureResource_Mapper.getComponent(victim).source;
 						obj.id = _TextureResource_Mapper.getComponent(victim).id;
 					}
-					var ne:IEntity = EntityFactory.createPlaceHolderEntity(entityManager, obj);
-					obj = null;
-					EntityFactory.killEntity(entityManager, ne, _Transform_Mapper.getComponent(ne));
+//					var ne:IEntity = EntityFactory.createPlaceHolderEntity(entityManager, obj);
+//					obj = null;
+//					EntityFactory.killEntity(entityManager, ne, _Transform_Mapper.getComponent(ne));
 					var node:Node = _Node_Mapper.getComponent(victim); 
 					if (node != null) {
-						for (var n:int = 0; n < node.outNodes.length; n++) {
-							var _e:IEntity = node.outNodes[n].entity;
-							entityManager.killEntity(_e);
+						while (node.outNodes.length != 0) {
+							trace("dans deathCertificate " + node.outNodes.length);
+							entityManager.killEntity(node.outNodes.pop().entity);
 						}
+//						for (var n:int = 0; n < node.outNodes.length; n++) {
+//							var _e:IEntity = node.outNodes[n].entity;
+//							entityManager.killEntity(_e);
+//						}
 					}
+					victim.flags = Flag.NONE;
 					entityManager.killEntity(victim);
+					trace(victim);
+					trace("flag : " + victim.flags);
+					if (_TextureResource_Mapper.getComponent(victim) != null)
+						trace("textResource.id : " + _TextureResource_Mapper.getComponent(victim).id);
 				}
 			}
 		}
