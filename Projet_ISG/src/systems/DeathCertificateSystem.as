@@ -76,11 +76,15 @@ package systems
 					
 					var obj:Object = { };
 					if ((node = _Node_Mapper.getComponent(victim)) != null) {
-						obj.x = victimTr.x + _Transform_Mapper.getComponent(node.outNodes[1].entity).x;
-						obj.y = victimTr.y + _Transform_Mapper.getComponent(node.outNodes[1].entity).y;
-						obj.rotation = _Transform_Mapper.getComponent(node.outNodes[1].entity).rotation;
-						obj.source = _TextureResource_Mapper.getComponent(node.outNodes[1].entity).source;
-						obj.id = _TextureResource_Mapper.getComponent(node.outNodes[1].entity).id;
+						var imageId:int = EntityFactory.getNodeByFlags(node, Flag.IMAGED);
+						var imageEntity:IEntity = node.outNodes[imageId].entity;
+						var imageTra:Transform = _Transform_Mapper.getComponent(imageEntity);
+						var imageTr:TextureResource = _TextureResource_Mapper.getComponent(imageEntity);
+						obj.x = victimTr.x + imageTra.x;
+						obj.y = victimTr.y + imageTra.y;
+						obj.rotation = imageTra.rotation;
+						obj.source = imageTr.source;
+						obj.id = imageTr.id;
 					} else {
 						obj.x = victimTr.x;
 						obj.y = victimTr.y;
@@ -88,9 +92,9 @@ package systems
 						obj.source = _TextureResource_Mapper.getComponent(victim).source;
 						obj.id = _TextureResource_Mapper.getComponent(victim).id;
 					}
-//					var ne:IEntity = EntityFactory.createPlaceHolderEntity(entityManager, obj);
-//					obj = null;
-//					EntityFactory.killEntity(entityManager, ne, _Transform_Mapper.getComponent(ne));
+					var ne:IEntity = EntityFactory.createPlaceHolderEntity(entityManager, obj);
+					obj = null;
+					EntityFactory.killEntity(entityManager, ne, _Transform_Mapper.getComponent(ne));
 					var node:Node = _Node_Mapper.getComponent(victim); 
 					if (node != null) {
 						while (node.outNodes.length != 0) {

@@ -81,7 +81,11 @@ package systems
 		public static function addSelectionCircleEntity(entityManager:IEntityManager, nodeMapper:IComponentMapper, transformMapper:IComponentMapper, en:IEntity, id:String):void {
 			//Ajout de l'entité pour le cercle de selection
 			var n:Node = nodeMapper.getComponent(en);
-			var _tr:Transform = transformMapper.getComponent(n.outNodes[1].entity);
+			trace("add Selection");
+			trace("imaged " + EntityFactory.getNodeByFlags(n, Flag.IMAGED));
+			trace("selected " + EntityFactory.getNodeByFlags(n, Flag.SELECTED));
+			var imageId:int = EntityFactory.getNodeByFlags(n, Flag.IMAGED);
+			var _tr:Transform = transformMapper.getComponent(n.outNodes[imageId].entity);
 			var c:IEntity = EntityFactory.createSelectionCircleEntity(entityManager, id, _tr.x, _tr.y);
 			n.outNodes.push(nodeMapper.getComponent(c));
 		}
@@ -95,8 +99,12 @@ package systems
 		}
 		
 		private function endSelection():void {
-			trace("end selection");
-			var n:INode = nodeMapper.getComponent(entitySelected).outNodes.pop();
+			trace("endSelection");
+			trace("imaged " + EntityFactory.getNodeByFlags(nodeMapper.getComponent(entitySelected), Flag.IMAGED));
+			trace("selected " + EntityFactory.getNodeByFlags(nodeMapper.getComponent(entitySelected), Flag.SELECTED));
+			var selectedId:int = EntityFactory.getNodeByFlags(nodeMapper.getComponent(entitySelected), Flag.SELECTED);
+			var n:INode = nodeMapper.getComponent(entitySelected).outNodes[selectedId];
+			nodeMapper.getComponent(entitySelected).outNodes.splice(selectedId, 1);
 			entityManager.killEntity(n.entity);
 			entitySelected = null;
 		}
