@@ -202,7 +202,22 @@
 		<TextureResource source="pictures/virus.png" id="virus" />
 		<Layered layerId="gameLayer" />
 	</e>
-	
+	<e flags="4">
+		<Transform x="200" y="300" />
+		<Speed velocity="0.3" />
+		<TargetPos x="500" y="500" />
+		<DeathCertificate infected="-1" wasted="-1" />
+		<TextureResource source="pictures/toxin.png" id="toxine" />
+		<Layered layerId="gameLayer" />
+	</e>
+	<e flags="4">
+		<Transform x="210" y="300" />
+		<Speed velocity="0.3" />
+		<TargetPos x="500" y="500" />
+		<DeathCertificate infected="-1" wasted="-1" />
+		<TextureResource source="pictures/toxin.png" id="toxine" />
+		<Layered layerId="gameLayer" />
+	</e>	
 </resource>
 
 
