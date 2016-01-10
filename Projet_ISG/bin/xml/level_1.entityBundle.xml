@@ -25,6 +25,11 @@
 		<Transform x="0" y="0" />
 		<Layer id="gameLayer" index="1" />
 	</e>
+	<e>
+		<Transform x="0" y="0" />
+		<TextureResource source="pictures/background.jpg" id="background" />
+		<Layered layerId="gameLayer" />
+	</e>
 	<!-- Cellule -->
 	<e flags="8">
 		<Transform x="500" y="150" />
