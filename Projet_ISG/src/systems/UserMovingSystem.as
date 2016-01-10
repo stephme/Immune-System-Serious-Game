@@ -106,6 +106,7 @@ package systems
 			var n:INode = nodeMapper.getComponent(entitySelected).outNodes[selectedId];
 			nodeMapper.getComponent(entitySelected).outNodes.splice(selectedId, 1);
 			var entity:IEntity = n.entity;
+			entity.flags = Flag.NONE;
 			entityManager.removeAllComponents(entity);
 			entityManager.killEntity(entity);
 			entitySelected = null;
