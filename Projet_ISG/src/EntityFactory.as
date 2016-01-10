@@ -92,21 +92,27 @@ package
 		
 		static public function killEntity(em:IEntityManager, t:IEntity, ttr:Transform):void {
 			var pas:Number = 0.1;
-			var tim:Timer = new Timer(100, 1 / pas);
-			tim.addEventListener(TimerEvent.TIMER, fadeOut(ttr, pas));
+			var tim:Timer = new Timer(500, 1 / pas);
+			tim.addEventListener(TimerEvent.TIMER, function (event:TimerEvent):void {
+				trace("alpha = " + ttr.alpha + " x = " + ttr.x);
+				ttr.alpha -= pas;
+			});
+			tim.addEventListener(TimerEvent.TIMER_COMPLETE, function(event:TimerEvent):void {
+				trace("je suis mort " + event);
+			});
+/*			tim.addEventListener(TimerEvent.TIMER, fadeOut(ttr, pas));
 			function fadeOut(ttr:Transform, pas:Number):Function {
 				return function():void {
-					trace("mon ttr est de " + ttr.alpha);
 					ttr.alpha -= pas;
 				}
-			}
+			}*/
 
-			tim.addEventListener(TimerEvent.TIMER_COMPLETE, kill(t));
+/*			tim.addEventListener(TimerEvent.TIMER_COMPLETE, kill(t));
 			function kill(t:IEntity):Function {
 				return function():void {
 					em.killEntity(t);
 				}
-			}
+			}*/
 			tim.start();
 		}
 		
