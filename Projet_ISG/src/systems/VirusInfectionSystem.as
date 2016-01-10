@@ -76,7 +76,7 @@ package systems
 			for (var i:int = 0; i < victimsVector.length; i++) {
 				var victim:IEntity = victimsVector[i];
 				var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
-				if (victimDc == null || victimDc.dead) continue;
+				if (victimDc.dead) continue;
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
 				if (victimVt != null) { //La victime est infectée
 					var victimHi:HolderInfection = holderMapper.getComponent(victim);

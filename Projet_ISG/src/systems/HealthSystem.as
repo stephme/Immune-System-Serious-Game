@@ -50,11 +50,8 @@ package systems
 						updateHealthBar(transformMapper.getComponent(nodeMapper.getComponent(e).outNodes[0].entity), h);
 					}
 				}
-				
-				if (h.currentPV <= 0) {
+				if (h.currentPV <= 0)
 					deathCerti.dead = true;
-					continue;
-				}
 			}
 		}
 		

@@ -60,7 +60,6 @@ package systems
 							var health:Health = healthMapper.getComponent(v);
 							health.currentPV -= TOXIN_DAMAGES;
 							HealthSystem.updateHealthBar(transformMapper.getComponent(nodeMapper.getComponent(v).outNodes[0].entity), health);
-							
 							trace("toxin is killed");
 							dc.dead = true;
 						}

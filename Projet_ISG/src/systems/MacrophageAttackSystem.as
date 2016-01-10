@@ -70,15 +70,6 @@ package systems {
 				for (var i:int = 0; i < victimsVector.length; i++) {
 					var victim:IEntity = victimsVector[i];
 					var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
-					/**/
-					if (victimDc == null) {
-						trace("flag : " + victim.flags);
-						if (textureResourceMapper.getComponent(victim) != null)
-							trace("textResource.id : " + textureResourceMapper.getComponent(victim).id);
-						if (speedMapper.getComponent(victim) != null)
-							trace("has a speed component");
-					}
-					/**/
 					if (victimDc.dead) continue;
 					var virusTypeV:VirusTypeV = virusTypeVMapper.getComponent(victim);
 					if (virusTypeV != null && !aggluMapper.getComponent(victim).agglu) continue;

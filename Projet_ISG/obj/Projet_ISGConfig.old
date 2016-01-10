@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'05/01/2016'</value>
+      <value>'10/01/2016'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -32,19 +32,19 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Users\elliott\Documents\Master_2\ISG\projet_ISG\Projet_ISG\src</path-element>
-      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>C:\Users\Stéphane\Desktop\projet-isg\Projet_ISG\src</path-element>
+      <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\Users\elliott\Documents\Master_2\ISG\projet_ISG\Projet_ISG\libs\GenomeFramework.swc</path-element>
-      <path-element>C:\Users\elliott\Documents\Master_2\ISG\projet_ISG\Projet_ISG\libs\GenomeGameManagement.swc</path-element>
-      <path-element>C:\Users\elliott\Documents\Master_2\ISG\projet_ISG\Projet_ISG\libs\GenomeRenderManagement.swc</path-element>
-      <path-element>C:\Users\elliott\Documents\Master_2\ISG\projet_ISG\Projet_ISG\libs\GenomeResourceManagement.swc</path-element>
-      <path-element>C:\Users\elliott\Documents\Master_2\ISG\projet_ISG\Projet_ISG\libs\Geography.swc</path-element>
+      <path-element>C:\Users\Stéphane\Desktop\projet-isg\Projet_ISG\libs\GenomeFramework.swc</path-element>
+      <path-element>C:\Users\Stéphane\Desktop\projet-isg\Projet_ISG\libs\GenomeGameManagement.swc</path-element>
+      <path-element>C:\Users\Stéphane\Desktop\projet-isg\Projet_ISG\libs\GenomeRenderManagement.swc</path-element>
+      <path-element>C:\Users\Stéphane\Desktop\projet-isg\Projet_ISG\libs\GenomeResourceManagement.swc</path-element>
+      <path-element>C:\Users\Stéphane\Desktop\projet-isg\Projet_ISG\libs\Geography.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\elliott\Documents\Master_2\ISG\projet_ISG\Projet_ISG\src\Main.as</path-element>
+    <path-element>C:\Users\Stéphane\Desktop\projet-isg\Projet_ISG\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
