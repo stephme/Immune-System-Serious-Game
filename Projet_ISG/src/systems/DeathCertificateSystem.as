@@ -104,10 +104,6 @@ package systems
 							trace("dans deathCertificate " + node.outNodes.length);
 							entityManager.killEntity(node.outNodes.pop().entity);
 						}
-//						for (var n:int = 0; n < node.outNodes.length; n++) {
-//							var _e:IEntity = node.outNodes[n].entity;
-//							entityManager.killEntity(_e);
-//						}
 					}
 					victim.flags = Flag.NONE;
 					entityManager.killEntity(victim);
