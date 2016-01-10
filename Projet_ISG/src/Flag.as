@@ -17,7 +17,6 @@ package
 		public static const VIRBAR:int = 128;
 		public static const BACBAR:int = 256;
 		public static const RECOAREA:int = 512;
-		
 	}
 
 }

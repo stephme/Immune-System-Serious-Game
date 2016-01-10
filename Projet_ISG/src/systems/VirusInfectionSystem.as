@@ -79,7 +79,6 @@ package systems
 				if (victimDc.dead) continue;
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
 				if (victimVt != null) { //La victime est infectée
-//					trace ("je suis infecte " + i);
 					var victimHi:HolderInfection = holderMapper.getComponent(victim);
 					if (victimHi != null) {
 						var er:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
