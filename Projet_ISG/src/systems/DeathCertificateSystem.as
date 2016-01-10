@@ -40,8 +40,7 @@ package systems
 		}
 		
 		override protected function onProcess(delta:Number):void {
-			var familySize:Number = _Dead_Entities.members.length; 
-			var j:int;
+			var familySize:Number = _Dead_Entities.members.length;
 			for (var i:int = 0 ; i < familySize ; i++) {
 				var victim:IEntity = _Dead_Entities.members[i];
 				var victimDc:DeathCertificate = _Death_Certificate_Mapper.getComponent(victim);
@@ -59,12 +58,12 @@ package systems
 						ve.transform = { x : victimTr.x, y : victimTr.y };
 						ve.type = { propagation : victimVt.propagation , effectiveness : victimVt.effectiveness};
 						ve.targetPos = { x: victimTr.x, y : victimTr.y };
-						for (j = 0; j < int(victimDc.infected); j++) {
+						for (var f:int = 0; f < int(victimDc.infected); f++) {
 							EntityFactory.createVirusEntity(entityManager, ve);
 						}
 					}
 					
-					for (j = 0; j < victimDc.wasted; j++)
+					for (var j:int = 0; j < victimDc.wasted; j++)
 						EntityFactory.createWasteEntity(entityManager, victimTr.x, victimTr.y);
 					
 					if (UserMovingSystem.entitySelected == victim)
@@ -99,10 +98,13 @@ package systems
 					if (node != null) {
 						while (node.outNodes.length != 0) {
 							trace("dans deathCertificate " + node.outNodes.length);
-							entityManager.killEntity(node.outNodes.pop().entity);
+							var childEntity:IEntity = node.outNodes.pop().entity;
+							entityManager.removeAllComponents(childEntity);
+							entityManager.killEntity(childEntity);
 						}
 					}
 					victim.flags = Flag.NONE;
+					entityManager.removeAllComponents(victim);
 					entityManager.killEntity(victim);
 					trace(victim);
 					trace("flag : " + victim.flags);

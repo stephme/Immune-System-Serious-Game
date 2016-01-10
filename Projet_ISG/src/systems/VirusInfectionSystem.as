@@ -79,6 +79,7 @@ package systems
 				if (victimDc.dead) continue;
 				var victimVt:VirusTypeA = virusTypeAMapper.getComponent(victim);
 				if (victimVt != null) { //La victime est infectée
+//					trace ("je suis infecte " + i);
 					var victimHi:HolderInfection = holderMapper.getComponent(victim);
 					if (victimHi != null) {
 						var er:IEntity = nodeMapper.getComponent(victim).outNodes[1].entity;
@@ -93,8 +94,9 @@ package systems
 							UserMovingSystem.addSelectionCircleEntity(entityManager, nodeMapper, transformMapper, victim, layerMapper.getComponent(victim).id);
 						entityManager.removeComponent(victim, holderMapper.gene);				
 					}
-					continue;
+//					continue;
 				}
+//				trace ("je suis infecte ;qis je passe quand meme " + i);
 				var victimH:Health = healthMapper.getComponent(victim);
 				var victimTr:Transform = transformMapper.getComponent(victim);
 				var victimTp:ToxinProduction = toxinProductionMapper.getComponent(victim);
@@ -107,29 +109,32 @@ package systems
 					var virusTr:Transform = transformMapper.getComponent(virus);
 					if ((victimTp != null && Contact.virusWithBacteryContact(virusTr, victimTr, transformMapper.getComponent(nodeMapper.getComponent(victim).outNodes[1].entity))) || (victimTp == null && Contact.virusContact(victimTr, virusTr, 25))) {
 						trace("entity is infected by a virus");
+						if (virusTypeAMapper.getComponent(victim) != null) {
+							entityManager.removeComponent(victim, virusTypeAMapper.gene);
+						} else {
+							var isSelected:Boolean = false;
+							if (victim == UserMovingSystem.entitySelected) {
+								isSelected = true;
+								var node:Node = nodeMapper.getComponent(victim);
+								var n:int = EntityFactory.getNodeByFlags(node, Flag.SELECTED);
+								trace("le numero de node pour la selection " + n);
+								entityManager.killEntity(node.outNodes[n].entity);
+								node.outNodes.splice(n, 1);
+							}
+							var coucou:int = EntityFactory.getNodeByFlags(nodeMapper.getComponent(victim), Flag.IMAGED);
+							trace("le numero de node pour limage " + coucou);
+							var _e:IEntity = nodeMapper.getComponent(victim).outNodes[coucou].entity;
+							entityManager.addComponent(victim, HolderInfection, {
+								idImg : textureResourceMapper.getComponent(_e).id,
+								isSelected : isSelected
+							});
+							entityManager.removeComponent(_e, textureResourceMapper.gene);
+							entityManager.removeComponent(_e, layeredMapper.gene);
+						}
 						entityManager.addComponent(victim, VirusTypeA, {
 							propagation : virusVt.propagation,
 							effectiveness : virusVt.effectiveness
-						});
-						var isSelected:Boolean = false;
-						if (victim == UserMovingSystem.entitySelected) {
-							isSelected = true;
-							var node:Node = nodeMapper.getComponent(victim);
-							var n:int = EntityFactory.getNodeByFlags(node, Flag.SELECTED);
-							trace("le numero de node pour la selection " + n);
-							entityManager.killEntity(node.outNodes[n].entity);
-							node.outNodes.splice(n, 1);
-						}
-						var coucou:int = EntityFactory.getNodeByFlags(nodeMapper.getComponent(victim), Flag.IMAGED);
-						trace("le numero de node pour limage " + coucou);
-						var _e:IEntity = nodeMapper.getComponent(victim).outNodes[coucou].entity;
-						entityManager.addComponent(victim, HolderInfection, {
-							idImg : textureResourceMapper.getComponent(_e).id,
-							isSelected : isSelected
-						});
-						entityManager.removeComponent(_e, textureResourceMapper.gene);
-						entityManager.removeComponent(_e, layeredMapper.gene);
-						
+						});						
 						trace("virus is killed");
 						virusDc.dead = true;
 					}
