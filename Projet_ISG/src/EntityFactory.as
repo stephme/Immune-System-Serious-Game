@@ -92,12 +92,13 @@ package
 		
 		static public function killEntity(em:IEntityManager, t:IEntity, ttr:Transform):void {
 			var pas:Number = 0.1;
-			var tim:Timer = new Timer(500, 1 / pas);
+			var tim:Timer = new Timer(100, 1 / pas);
 			tim.addEventListener(TimerEvent.TIMER, function (event:TimerEvent):void {
-				trace("alpha = " + ttr.alpha + " x = " + ttr.x);
 				ttr.alpha -= pas;
 			});
 			tim.addEventListener(TimerEvent.TIMER_COMPLETE, function(event:TimerEvent):void {
+				em.removeAllComponents(t);
+				em.killEntity(t);
 				trace("je suis mort " + event);
 			});
 /*			tim.addEventListener(TimerEvent.TIMER, fadeOut(ttr, pas));

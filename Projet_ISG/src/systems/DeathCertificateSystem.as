@@ -58,7 +58,7 @@ package systems
 						ve.transform = { x : victimTr.x, y : victimTr.y };
 						ve.type = { propagation : victimVt.propagation , effectiveness : victimVt.effectiveness};
 						ve.targetPos = { x: victimTr.x, y : victimTr.y };
-						for (var f = 0; f < int(victimDc.infected); f++) {
+						for (var f:int = 0; f < int(victimDc.infected); f++) {
 							EntityFactory.createVirusEntity(entityManager, ve);
 						}
 					}
@@ -101,10 +101,13 @@ package systems
 					if (node != null) {
 						while (node.outNodes.length != 0) {
 							trace("dans deathCertificate " + node.outNodes.length);
-							entityManager.killEntity(node.outNodes.pop().entity);
+							var childEntity:IEntity = node.outNodes.pop().entity;
+							entityManager.removeAllComponents(childEntity);
+							entityManager.killEntity(childEntity);
 						}
 					}
 					victim.flags = Flag.NONE;
+					entityManager.removeAllComponents(victim);
 					entityManager.killEntity(victim);
 					trace(victim);
 					trace("flag : " + victim.flags);
