@@ -149,6 +149,47 @@
 			<Node />
 		</e>
 	</e>
+	<!-- Lymphocyte B-->
+	<e>
+		<Transform x="600" y="180" />
+		<Layer id="lymphoBLayer01" index="4" />
+		<Speed velocity="3" />
+		<TargetPos x="600" y="180" />
+		<SpecialisationLevel />
+		<DeathCertificate />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="lymphoBLayer01"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/bCell.png" id="bCell" />
+			<Layered layerId="lymphoBLayer01"/>
+			<Node />
+		</e>
+		<e>
+			<Transform x="-50" y="-50" alpha="0.2" scaleX="1" scaleY="1" />
+			<TextureResource source="pictures/recognitionArea.png" id="recognitionArea" />
+			<Layered layerId="lymphoBLayer01" />
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="30" scaleX="0" />
+			<TextureResource source="pictures/virusBar.png" id="virusBar" />
+			<Layered layerId="lymphoBLayer01" />
+			<Node />
+		</e>
+		<e>
+			<Transform x="-25" y="35" scaleX="0" />
+			<TextureResource source="pictures/bacteryBar.png" id="bacteryBar" />
+			<Layered layerId="lymphoBLayer01" />
+			<Node />
+		</e>
+	</e>
 	<!-- Macrophage -->
 	<e>
 		<Transform x="500" y="300" />
