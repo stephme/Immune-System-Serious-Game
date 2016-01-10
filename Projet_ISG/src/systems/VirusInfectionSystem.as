@@ -95,7 +95,6 @@ package systems
 					}
 //					continue;
 				}
-//				trace ("je suis infecte ;qis je passe quand meme " + i);
 				var victimH:Health = healthMapper.getComponent(victim);
 				var victimTr:Transform = transformMapper.getComponent(victim);
 				var victimTp:ToxinProduction = toxinProductionMapper.getComponent(victim);
