@@ -92,7 +92,7 @@ package
 		
 		static public function killEntity(em:IEntityManager, t:IEntity, ttr:Transform):void {
 			var pas:Number = 0.1;
-			var tim:Timer = new Timer(200, 1 / pas);
+			var tim:Timer = new Timer(100, 1 / pas);
 			function fadeOut(e:TimerEvent):void {
 				ttr.alpha -= pas;
 			}
