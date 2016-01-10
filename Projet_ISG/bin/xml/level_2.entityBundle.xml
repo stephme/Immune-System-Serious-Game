@@ -1,0 +1,247 @@
+<?XML version="1.0" encoding="utf-8" ?>
+<resource>
+	<!-- Définition des alias -->
+	<a name="Transform" class="com.ktm.genome.render.component.Transform" />
+	<a name="TextureResource" class="com.ktm.genome.resource.component.TextureResource" />
+	<a name="Layer" class="com.ktm.genome.render.component.Layer" />
+	<a name="Layered" class="com.ktm.genome.render.component.Layered" />
+	<a name="Speed" class="com.lip6.genome.geography.move.component.Speed" />
+	<a name="TargetPos" class="com.lip6.genome.geography.move.component.TargetPos" />
+	<a name="Node" class="com.ktm.genome.game.component.Node" />
+	
+	<a name="ToxinProduction" class="components.ToxinProduction" />
+	<a name="SpecialisationLevel" class="components.SpecialisationLevel" />
+	<a name="Health" class="components.Health" />
+	<a name="DeathCertificate" class="components.DeathCertificate" />
+	<a name="VirusTypeV" class="components.VirusTypeV" />
+	<a name="VirusTypeA" class="components.VirusTypeA" />
+	<a name="Agglutined" class="components.Agglutined" />
+	<a name="MacrophageState" class="components.MacrophageState" />
+	<a name="BacteriaInRotation" class="components.BacteriaInRotation" />
+	
+	<!-- Définition des entités -->
+	<!-- entité 1 -->
+	<e>
+		<Transform x="0" y="0" />
+		<Layer id="gameLayer" index="1" />
+	</e>
+	<!-- Cellule -->
+	<e flags="8">
+		<Transform x="100" y="150" />
+		<Layer id="cellLayer01" index="3" />
+		<DeathCertificate />
+		<VirusTypeA propagation="0.1" effectiveness="2" />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="cellLayer01"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/structCell_infected.png" id="structCell_infected" />
+			<Layered layerId="cellLayer01" />
+			<Node />
+		</e>
+	</e>
+	<!-- Cellule -->
+	<e flags="8">
+		<Transform x="100" y="50" />
+		<Layer id="cellLayer02" index="3" />
+		<DeathCertificate />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="cellLayer02"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/structCell.png" id="structCell" />
+			<Layered layerId="cellLayer02" />
+			<Node />
+		</e>
+	</e>
+	<!-- Cellule -->
+	<e flags="8">
+		<Transform x="200" y="300" />
+		<Layer id="cellLayer03" index="3" />
+		<DeathCertificate />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="cellLayer03"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/structCell.png" id="structCell" />
+			<Layered layerId="cellLayer03" />
+			<Node />
+		</e>
+	</e>
+	<!-- Cellule -->
+	<e flags="8">
+		<Transform x="140" y="300" />
+		<Layer id="cellLayer04" index="3" />
+		<DeathCertificate />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="cellLayer04"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/structCell.png" id="structCell" />
+			<Layered layerId="cellLayer04" />
+			<Node />
+		</e>
+	</e>
+	<!-- Cellule -->
+	<e flags="8">
+		<Transform x="500" y="150" />
+		<Layer id="cellLayer05" index="3" />
+		<DeathCertificate />
+		<VirusTypeA propagation="0.2" effectiveness="10" />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="cellLayer05"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/structCell_infected.png" id="structCell_infected" />
+			<Layered layerId="cellLayer05" />
+			<Node />
+		</e>
+	</e>
+	<!-- Lymphocyte T8-->
+	<e flags="2">
+		<Transform x="200" y="500" />
+		<Layer id="lymphoT8Layer01" index="5" />
+		<Speed velocity="3" />
+		<TargetPos x="200" y="500" />
+		<DeathCertificate />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="lymphoT8Layer01"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/tCell.png" id="tCell" />
+			<Layered layerId="lymphoT8Layer01"/>
+			<Node />
+		</e>
+	</e>
+	<!-- Macrophage -->
+	<e>
+		<Transform x="500" y="300" />
+		<Layer id="macrophageLayer01" index="4" />
+		<Speed velocity="3" />
+		<TargetPos x="500" y="300" />
+		<DeathCertificate />
+		<MacrophageState eatingDamages="7" />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="-25" y="-35" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="macrophageLayer01"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="-25" y="-25" />
+			<TextureResource source="pictures/macro.png" id="macro" />
+			<Layered layerId="macrophageLayer01"/>
+			<Node />
+		</e>
+	</e>
+	<!-- Bacterie -->
+	<e>
+		<Transform x="10" y="10" />
+		<Layer id="bacteriaLayer01" index="2" />
+		<Speed velocity="2" />
+		<TargetPos x="300" y="300" />
+		<BacteriaInRotation pas="0.08" />
+		<ToxinProduction />
+		<Agglutined />
+		<DeathCertificate />
+		<Health />
+		<Node />
+		<e>
+			<Transform x="0" y="-27.5" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="bacteriaLayer01"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="0" y="-7.5" rotation="0" />
+			<TextureResource source="pictures/bactery.png" id="bactery" />
+			<Layered layerId="bacteriaLayer01"/>
+			<Node />
+		</e>
+	</e>
+	<!-- Bacterie -->
+	<e>
+		<Transform x="10" y="10" />
+		<Layer id="bacteriaLayer02" index="2" />
+		<Speed velocity="2" />
+		<TargetPos x="300" y="300" />
+		<BacteriaInRotation pas="0.08" />
+		<ToxinProduction />
+		<Agglutined />
+		<DeathCertificate />
+		<Health delta="2" />
+		<Node />
+		<e>
+			<Transform x="0" y="-27.5" />
+			<TextureResource source="pictures/healthBar.png" id="healthBar" />
+			<Layered layerId="bacteriaLayer02"/>
+			<Node />
+		</e>
+		<e flags="32">
+			<Transform x="0" y="-7.5" rotation="0" />
+			<TextureResource source="pictures/bactery.png" id="bactery" />
+			<Layered layerId="bacteriaLayer02"/>
+			<Node />
+		</e>
+	</e>
+	<!--Virus-->
+	<e>
+		<Transform x="400" y="500" />
+		<Speed velocity="0.3" />
+		<TargetPos x="400" y="500" />
+		<DeathCertificate infected="-1" wasted="-1" />
+		<VirusTypeV propagation="0.2" effectiveness="2" />
+		<Agglutined />
+		<TextureResource source="pictures/virus.png" id="virus" />
+		<Layered layerId="gameLayer" />
+	</e>
+	<!--Virus-->
+	<e>
+		<Transform x="100" y="300" />
+		<Speed velocity="0.3" />
+		<TargetPos x="100" y="300" />
+		<DeathCertificate infected="-1" wasted="-1" />
+		<VirusTypeV propagation="0.4" effectiveness="4" />
+		<Agglutined />
+		<TextureResource source="pictures/virus.png" id="virus" />
+		<Layered layerId="gameLayer" />
+	</e>	
+</resource>

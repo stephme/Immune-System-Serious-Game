@@ -80,9 +80,6 @@ package systems
 						var imageEntity:IEntity = node.outNodes[imageId].entity;
 						var imageTra:Transform = _Transform_Mapper.getComponent(imageEntity);
 						var imageTr:TextureResource = _TextureResource_Mapper.getComponent(imageEntity);
-						var n:Node = _Node_Mapper.getComponent(imageEntity);
-						if (imageTr == null)
-							trace(n.inNodes[0].entity.flags);
 						obj.x = victimTr.x + imageTra.x;
 						obj.y = victimTr.y + imageTra.y;
 						obj.rotation = imageTra.rotation;
