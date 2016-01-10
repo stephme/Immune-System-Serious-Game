@@ -64,6 +64,7 @@ package
 			sm.setSystem(DeathCertificateSystem).setProcess(ProcessPhase.FRAME);
 
 			var gameURL:String = 'xml/level_2.entityBundle.xml';
+//			var gameURL:String = 'xml/game.entityBundle.xml'
 			EntityFactory.createResourcedEntity(world.getEntityManager(), gameURL, "game");
 		}
 		

@@ -281,7 +281,7 @@
 	</e>
 	<!--Virus-->
 	<e>
-		<Transform x="400" y="500" />
+		<Transform x="500" y="300" />
 		<Speed velocity="0.3" />
 		<TargetPos x="100" y="300" />
 		<DeathCertificate infected="-1" wasted="-1" />

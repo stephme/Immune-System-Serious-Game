@@ -99,6 +99,7 @@ package systems
 						while (node.outNodes.length != 0) {
 							trace("dans deathCertificate " + node.outNodes.length);
 							var childEntity:IEntity = node.outNodes.pop().entity;
+							childEntity.flags = Flag.NONE;
 							entityManager.removeAllComponents(childEntity);
 							entityManager.killEntity(childEntity);
 						}
