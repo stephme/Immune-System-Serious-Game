@@ -51,7 +51,7 @@ package systems {
 				for (var i:int = 0; i < victimsVector.length; i++) {
 					var victim:IEntity = victimsVector[i];
 					var victimDc:DeathCertificate = deathCertificateMapper.getComponent(victim);
-					if (victimDc.dead || virusTypeAMapper.getComponent(victim) == null) continue;
+					if (victim == t8 || victimDc.dead || virusTypeAMapper.getComponent(victim) == null) continue;
 					var victimTp:ToxinProduction = toxinProductionMapper.getComponent(victim);
 					var victimTr:Transform =  transformMapper.getComponent(victim);
 					if ((victimTp != null && Contact.bacteryContact(t8Tr, victimTr, transformMapper.getComponent(nodeMapper.getComponent(victim).outNodes[1].entity), 25)) ||
